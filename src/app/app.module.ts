@@ -21,6 +21,7 @@ import { ListeSelectionResponsablesComponent } from './liste-selection-responsab
 import { AideRechercheComponent } from './aide-recherche/aide-recherche.component';
 import { SearchFieldComponent } from './search-field/search-field.component';
 import { ListeResponsablesV2Component } from './liste-responsables-v2/liste-responsables-v2.component';
+import { FormEditResponsableComponent } from './form-edit-responsable/form-edit-responsable.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { ListeResponsablesV2Component } from './liste-responsables-v2/liste-resp
     ListeSelectionResponsablesComponent,
     AideRechercheComponent,
     SearchFieldComponent,
-    ListeResponsablesV2Component
+    ListeResponsablesV2Component,
+    FormEditResponsableComponent
   ],
   imports: [
     BrowserModule,

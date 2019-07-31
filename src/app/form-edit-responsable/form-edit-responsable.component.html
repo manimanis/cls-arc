@@ -1,0 +1,19 @@
+<div>
+  <form [formGroup]="frm">
+    <div class="my-2">
+      <h5><i class="fas fa-user"></i> Nom & Prénom</h5>
+      <input type="text" class="form-control" formControlName="nomPrenom" placeholder="Nom & Prénom">
+    </div>
+    <div *ngFor="let tc of typesContacts.items" class="my-2" [formArrayName]="tc.contact">
+      <h5><i [class]="tc.contactIcon"></i> {{tc.contact}}</h5>
+      <div *ngFor="let ci of contact.getContactsItems(tc.contact)" class="row">
+        <div class="col-sm-6">
+          <input class="form-control" placeholder="{{tc.contact}}">
+        </div>
+        <div class="col-sm-6">
+          <input class="form-control" placeholder="remarque">
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

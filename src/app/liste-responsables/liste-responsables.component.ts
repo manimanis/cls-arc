@@ -167,4 +167,8 @@ export class ListeResponsablesComponent implements OnInit {
       });
   }
 
+  // ---------------------------------------------------------
+  editContact(contact: Contact) {
+
+  }
 }

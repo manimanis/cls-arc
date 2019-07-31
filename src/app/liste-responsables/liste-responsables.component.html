@@ -1,4 +1,7 @@
 <div id="liste-responsables" class="container">
+
+  <form-edit-responsable></form-edit-responsable>
+
   <div>
     <h2 class="mt-3 mb-1">Liste des responsables</h2>
 
@@ -11,7 +14,7 @@
     </div>
 
     <liste-responsables-v2 [contacts]="contacts" (orderChanged)="changeOrderDirection($event)"
-      (itemSelection)="toggleSelection($event)"></liste-responsables-v2>
+      (itemSelection)="toggleSelection($event)" (editContactClicked)="editContact($event)"></liste-responsables-v2>
 
     <div *ngIf="contactsItemsCount > contacts.length">
       <a [routerLink]="" (click)="fetchMore()">Afficher plus...</a>

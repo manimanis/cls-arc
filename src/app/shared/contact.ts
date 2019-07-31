@@ -19,7 +19,7 @@ export class Contact {
     return (ct && ct.contactIcon) || '';
   }
 
-  constructor(obj) {
+  constructor(obj = {}) {
     this.setData(obj);
   }
 
@@ -56,8 +56,47 @@ export class Contact {
   }
 
   addContacts(contactInfos: any) {
+    if (!contactInfos) {
+      return;
+    }
+
     for (const k of Object.keys(contactInfos)) {
       contactInfos[k].forEach(ci => this.addContactInfo(ci));
     }
+  }
+
+  /**
+   * Returns true if the contact has this type of contact
+   * @param contact string
+   */
+  hasTypeContact(contact: string): boolean {
+    return !!this.contactInfos[contact];
+  }
+
+  /**
+   * Create the specified type of contact if it doesn't exist, if it exists it does nothing.
+   * @param contact string
+   */
+  createTypeContact(contact: string) {
+    if (!this.hasTypeContact(contact)) {
+      this.contactInfos[contact] = [];
+    }
+  }
+
+  /**
+   * Return an array of all contacts items that belong to one type of contact.
+   * @param contact string
+   */
+  getContactsItems(contact: string): ContactItem[] {
+    if (!this.hasTypeContact(contact)) {
+      this.createTypeContact(contact);
+    }
+    return this.contactInfos[contact];
+  }
+
+  createContactItem(contact: string) {
+    const ci = new ContactItem({ typeContact: contact });
+    this.addContactInfo(ci);
+    return ci;
   }
 }

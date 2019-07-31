@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { TypeContactCollection } from '../shared/type-contact-collection';
-import { Subject, throwError } from 'rxjs';
+import { Subject, throwError, of } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { TypeContact } from '../shared/type-contact';
@@ -10,7 +10,7 @@ import { TypeContact } from '../shared/type-contact';
 })
 export class TypesContactsService {
 
-  private typesContacts = new TypeContactCollection();
+  typesContacts = new TypeContactCollection();
   private isFetchingData = false;
   typesContactsSubject = new Subject<TypeContactCollection>();
 
@@ -36,6 +36,21 @@ export class TypesContactsService {
           this.emitData();
         });
     }
+  }
+
+  public fetchContacts(fromLocal: boolean = true) {
+    if (!fromLocal || this.typesContacts.isEmpty()) {
+      return this.http
+        .get(`${this.API_BASE_URL}/${this.API_PATH}`)
+        .pipe(
+          tap((data: any) => {
+            this.typesContacts.clear();
+            this.typesContacts.addManyTypesContacts(data.data);
+          }),
+          catchError(this.handleErrors)
+        );
+    }
+    return of(this.typesContacts);
   }
 
   public insertContactType(typeContact: TypeContact) {
