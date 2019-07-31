@@ -1,0 +1,35 @@
+.date-creation, .description, .adresse, .salles {
+  position: relative;
+}
+
+.date-creation span::before, .description span::before, .adresse span::before {
+  content: "Date création";
+  font-size: 0.7em;
+  position: absolute;
+  top: -1em;
+  font-style: italic;
+}
+
+.description span::before {
+  content: "Description";
+}
+
+.adresse span::before {
+  content: "Adresse Postale";
+}
+
+.salles div {
+  position: relative;
+}
+
+.salles>div::before {
+  content: "Liste des salles";
+  font-size: 0.7em;
+  position: absolute;
+  top: -1em;
+  font-style: italic;
+}
+
+.salles button {
+  font-size: 1.5em;
+}

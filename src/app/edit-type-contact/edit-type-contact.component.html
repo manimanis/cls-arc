@@ -1,0 +1,47 @@
+<div id="edit-type-contact-{{identifier}}">
+  <form [formGroup]="typeContactForm" (submit)="submitForm()">
+    <div class="row">
+      <div class="col-sm-6 col-lg-4 my-1">
+        <label for="contact-{{identifier}}"><small>Type contact (obligatoire)</small></label>
+        <input type="text" name="contact" id="contact-{{identifier}}" class="form-control"
+          [ngClass]="{'is-invalid': contactCtrl.invalid}" formControlName="contact" (keydown.enter)="submitForm()"
+          (keydown.esc)="cancelEdit()" placeholder="Type contact">
+        <div class="invalid-feedback">
+          <span *ngIf="contactCtrl.errors && contactCtrl.errors['required']">Ce champs est obligaoire.</span>
+          <span *ngIf="contactCtrl.errors && contactCtrl.errors['pattern']">Le type de contact doit contenir au moins
+            trois lettres.</span>
+          <span *ngIf="contactCtrl.errors && contactCtrl.errors['duplicateItem']">Cette valeur est déjà utilisée.</span>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-4 my-1">
+        <label for="contact-icon-{{identifier}}"><small>Type contact (optionnel)</small></label>
+        <div class="input-group">
+          <div *ngIf="typeContactForm.get('contactIcon').valid" class="input-group-prepend">
+            <span class="input-group-text"><i [class]="typeContactForm.get('contactIcon').value"></i></span>
+          </div>
+          <input type="text" name="contactIcon" id="contact-icon-{{identifier}}" class="form-control"
+            formControlName="contactIcon" placeholder="Icône Fontawesome"
+            [ngClass]="{'is-invalid': typeContactForm.get('contactIcon').invalid}" (keydown.enter)="submitForm()"
+            (keydown.esc)="cancelEdit()">
+          <div class="invalid-feedback">
+            Taper le nom d'une icône fontawesome.
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-lg-4">
+        <label class="d-none d-lg-inline-block">&nbsp;</label>
+        <div>
+          <button *ngIf="insertMode" type="submit" [hidden]="!typeContactForm.valid" class="btn btn-success m-1"><i
+              class="fas fa-plus-circle"></i>
+            Insérer</button>
+          <button *ngIf="!insertMode" type="submit" [hidden]="!typeContactForm.valid" class="btn btn-success m-1">
+            <i class="fas fa-plus-circle"></i> Modifier
+          </button>
+          <button *ngIf="!insertMode" type="button" (click)="cancelEdit()" class="btn btn-secondary m-1">
+            <i class="fas fa-times-circle"></i> Annuler
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

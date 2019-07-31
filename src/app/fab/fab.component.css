@@ -1,0 +1,15 @@
+a {
+  background-color: #007bff;
+  display: block;
+  text-align: center;
+  line-height: 2.5rem;
+  width: 3rem;
+  height: 3rem;
+  font-size: 2.5rem;
+  color: #fff;
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  border-radius: 50%;
+  text-decoration: none !important;
+}

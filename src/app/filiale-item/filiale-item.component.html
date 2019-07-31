@@ -1,0 +1,54 @@
+<div class="card">
+  <div class="card-header">
+    <h5>Filiale : {{filiale.nomFiliale}}</h5>
+  </div>
+  <div class="card-body">
+    <div class="card-text">
+
+      <div class="row">
+        <div class="description mt-3 col-md-10">
+          <span>{{ filiale.description }}</span>
+        </div>
+        <div class="date-creation mt-3 col-md-2">
+          <span>{{ filiale.dateCreation | date:'dd/MM/yyyy' }}</span>
+        </div>
+      </div>
+
+      <div class="adresse mt-3">
+        <span>{{ filiale.adresse }}</span>
+      </div>
+      <div class="salles mt-3">
+        <div>
+          <div class="row">
+            <div *ngFor="let salle of filiale.salles" [ngClass]="buttonColumnClass()">
+              <button class="btn btn-info w-100 my-2 py-3">
+                <i class="fas fa-building"></i> {{salle.nomSalle}}
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div>
+      <small>
+        <em><a *ngIf="filiale.contacts && filiale.contacts.length > 0" [routerLink]="" (click)="toggleContactsVisible()"
+            class="d-print-none">
+            {{contactsVisible ? 'Cacher la liste des contacts...' : 'Afficher la liste des contacts...'}}
+          </a></em>
+      </small>
+    </div>
+
+    <div [ngClass]="{ 'd-none': !contactsVisible, 'd-print-block': true }">
+      <filiale-contact *ngFor="let contact of filiale.contacts" [contact]="contact"></filiale-contact>
+    </div>
+
+    <small class="row text-muted">
+      <div class="col-lg-3 col-sm-6 my-1"><strong>Nombre de salles : </strong>{{filiale.nbSalles}}</div>
+      <div class="col-lg-3 col-sm-6 my-1"><strong>Nombre d'armoires : </strong>{{filiale.nbArmoires}}</div>
+      <div class="col-lg-3 col-sm-6 my-1"><strong>Nombre d'étagères : </strong>{{filiale.nbEtageres}}</div>
+      <div class="col-lg-3 col-sm-6 my-1"><strong>Nombre de boîtes : </strong>{{filiale.nbBoites}}</div>
+    </small>
+  </div>
+</div>

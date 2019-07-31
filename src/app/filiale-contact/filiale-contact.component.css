@@ -1,0 +1,10 @@
+.filiale-contact span {
+  display: block;
+  white-space: pre-wrap;
+}
+
+.filiale-contact small {
+  display: block;
+  align-self: flex-start;
+  font-style: italic;
+}

@@ -1,0 +1,10 @@
+th.numero, td.numero {
+  font-size: 0.6rem;
+  font-style: initial;
+  width: 2rem;
+}
+
+th.operations, td.operations {
+  width: 6rem;
+  text-align: center;
+}
