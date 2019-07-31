@@ -9,12 +9,6 @@ import { Contact } from '../shared/contact';
 })
 export class ListeResponsablesV2Component implements OnInit, OnChanges {
 
-  @Input() displayTotalItemsCount = true;
-  @Input() displaySearchTotalItemsCount = true;
-  @Input() displaySearchVisibleItemsCount = true;
-
-  @Input() totalItemsCount = 0;
-  @Input() searchTotalItemsCount = 0;
   @Input() contacts: Contact[] = [];
 
   @Input() canSelect = true;
@@ -26,8 +20,13 @@ export class ListeResponsablesV2Component implements OnInit, OnChanges {
   @Input() canDelete = true;
   @Input() canRemove = false;
 
+  @Input() canReorder = true;
   @Input() orderDir = 'ASC';
   @Output() orderChanged = new EventEmitter<string>();
+
+  @Output() editContactClicked = new EventEmitter<Contact>();
+  @Output() deleteContactClicked = new EventEmitter<Contact>();
+  @Output() removeContactClicked = new EventEmitter<Contact>();
 
   hasAllItemsSelected = false;
 
@@ -84,6 +83,18 @@ export class ListeResponsablesV2Component implements OnInit, OnChanges {
       this.orderDir = '';
     }
     this.orderChanged.emit(this.orderDir);
+  }
+
+  editContact(contact: Contact) {
+    this.editContactClicked.emit(contact);
+  }
+
+  deleteContact(contact: Contact) {
+    this.deleteContactClicked.emit(contact);
+  }
+
+  removeContact(contact: Contact) {
+    this.removeContactClicked.emit(contact);
   }
 
 }

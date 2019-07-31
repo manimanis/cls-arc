@@ -4,10 +4,16 @@
 
     <search-field *ngIf="canSearch" class="my-2" (searchPattenModified)="searchPattern($event)"></search-field>
 
+    <div class="summary small">
+      <span><strong># Total :</strong> {{recordsCount}}</span>
+      <span><strong># affichés : </strong> {{contacts.length}}</span>
+      <span><strong># trouvés :</strong> {{contactsItemsCount}}</span>
+    </div>
+
     <liste-responsables-v2 [contacts]="contacts" (orderChanged)="changeOrderDirection($event)"
       (itemSelection)="toggleSelection($event)"></liste-responsables-v2>
 
-    <div *ngIf="contactsTotalCount > contacts.length">
+    <div *ngIf="contactsItemsCount > contacts.length">
       <a [routerLink]="" (click)="fetchMore()">Afficher plus...</a>
     </div>
   </div>
@@ -19,30 +25,8 @@
       <strong>Nombre de responsables : </strong> {{selectedContacts().length}}
     </div>
 
-    <table class="table table-sm table-striped table-hover">
-      <thead class="thead-dark">
-        <th class="numero">&nbsp;</th>
-        <th class="nom-prenom">
-          Nom & Prénom
-        </th>
-        <th class="select-item">
-          <button class="btn btn-info btn-sm m-1" title="Annuler tous les élémens sélectionnés."
-            (click)="selectAllItems(false)">
-            <i class="fas fa-times"></i>
-          </button>
-        </th>
-      </thead>
-      <tbody>
-        <tr *ngFor="let ct of selectedContacts(); let i = index">
-          <td class="numero"><small><em>#{{i+1}}</em></small></td>
-          <td class="nom-prenom">{{ct.nomPrenom}}</td>
-          <td class="select-item">
-            <button class="btn btn-info btn-sm m-1" title="Annuler la sélection." (click)="deselectContact(ct)">
-              <i class="fas fa-times"></i>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <liste-responsables-v2 [contacts]="selectedContacts()" [canReorder]="false" [canSelect]="false" [canEdit]="false"
+      [canDelete]="false" [canRemove]="true">
+    </liste-responsables-v2>
   </div>
 </div>

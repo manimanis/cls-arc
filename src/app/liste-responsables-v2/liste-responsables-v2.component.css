@@ -1,7 +1,3 @@
-.summary span:not(:last-child)::after {
-  content: ' - ';
-}
-
 .numero {
   width: 2em;
   text-align: center;
@@ -17,12 +13,22 @@
 }
 
 .operations {
-  width: 6em;
   text-align: center;
 }
 
+.operations.can-edit, .operations.can-delete, .operations.can-remove {
+  width: 3em;
+}
+
+.operations.can-edit.can-delete {
+  width: 6em;
+}
+
 @media screen and (max-width: 576px) {
-  .operations {
+  .operations.can-edit, .operations.can-delete, .operations.can-remove {
+    width: 4em;
+  }
+  .operations.can-edit.can-delete {
     width: 8em;
   }
 }

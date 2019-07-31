@@ -1,52 +1,43 @@
 <div>
-  <div class="summary small">
-    <span *ngIf="displayTotalItemsCount"><strong># Total :</strong> {{totalItemsCount}}</span>
-    <span *ngIf="displaySearchVisibleItemsCount"><strong># affichés : </strong> {{contacts.length}}</span>
-    <span *ngIf="displaySearchTotalItemsCount"><strong># trouvés :</strong> {{searchTotalItemsCount}}</span>
-  </div>
-
   <table class="table table-sm table-striped table-hover">
     <thead class="thead-dark">
       <tr>
-        <th class="d-none d-md-table-cell numero">#</th>
-        <th class="select-item">
-          <div *ngIf="canSelect">
-            <input type="checkbox" class="btn btn-info btn-sm m-1" [(ngModel)]="hasAllItemsSelected"
-              (click)="selectAllItems(!hasAllItemsSelected)">
-          </div>
+        <th class="d-none d-sm-table-cell numero">#</th>
+        <th *ngIf="canSelect" class="select-item">
+          <input type="checkbox" class="btn btn-info btn-sm m-1" [(ngModel)]="hasAllItemsSelected"
+            (click)="selectAllItems(!hasAllItemsSelected)">
         </th>
         <th class="nom-prenom">
-          <a [routerLink]="" (click)="changeOrderDirection()" title="Trier">
+          <a *ngIf="canReorder" [routerLink]="" (click)="changeOrderDirection()" title="Trier">
             <i
               [ngClass]="{'fas': true, 'fa-sort-alpha-down': orderDir === 'ASC', 'fa-sort-alpha-down-alt': orderDir === 'DESC', 'fa-sort': orderDir === ''}"></i>
           </a>
           Nom & Prénom
         </th>
-        <th *ngIf="hasOperations" class="operations">&nbsp;</th>
+        <th *ngIf="hasOperations" class="operations"
+          [ngClass]="{'can-edit': canEdit, 'can-delete': canDelete, 'can-remove': canRemove}">&nbsp;</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let ct of contacts; let i = index">
-        <td class="d-none d-md-table-cell numero"><small><em>{{i+1}}</em></small></td>
-        <td class="select-item">
-          <div *ngIf="canSelect">
-            <input type="checkbox" class="btn btn-info btn-sm m-1" [(ngModel)]="ct.isSelected"
-              (click)="selectContact(ct, !ct.isSelected)">
-          </div>
+        <td class="d-none d-sm-table-cell numero"><small><em>{{i+1}}</em></small></td>
+        <td *ngIf="canSelect" class="select-item">
+          <input type="checkbox" class="btn btn-info btn-sm m-1" [(ngModel)]="ct.isSelected"
+            (click)="selectContact(ct, !ct.isSelected)">
         </td>
         <td class="nom-prenom">{{ct.nomPrenom}}</td>
-        <td *ngIf="hasOperations" class="operations">
-          <div>
-            <button *ngIf="canEdit" class="btn btn-light btn-sm m-1" title="Modifier">
-              <i class="fas fa-pencil-alt"></i>
-            </button>
-            <button *ngIf="canDelete" class="btn btn-danger btn-sm m-1" title="Supprimer">
-              <i class="fas fa-trash-alt"></i>
-            </button>
-            <button *ngIf="canRemove" class="btn btn-info btn-sm m-1" title="Annuler la sélection.">
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
+        <td *ngIf="hasOperations" class="operations"
+          [ngClass]="{'can-edit': canEdit, 'can-delete': canDelete, 'can-remove': canRemove}">
+          <button *ngIf="canEdit" class="btn btn-light btn-sm m-1" title="Modifier" (click)="editContact(ct)">
+            <i class="fas fa-pencil-alt"></i>
+          </button>
+          <button *ngIf="canDelete" class="btn btn-danger btn-sm m-1" title="Supprimer" (click)="deleteContact(ct)">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+          <button *ngIf="canRemove" class="btn btn-info btn-sm m-1" title="Annuler la sélection."
+            (click)="removeContact(ct)">
+            <i class="fas fa-times"></i>
+          </button>
         </td>
       </tr>
       <tr>

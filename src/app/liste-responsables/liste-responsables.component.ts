@@ -24,7 +24,8 @@ export class ListeResponsablesComponent implements OnInit {
 
   searchStr = '';
   pageNumber = 0;
-  contactsTotalCount = 0;
+  contactsItemsCount = 0;
+  recordsCount = 0;
   orderDir = 'ASC';
 
   contacts: Contact[] = [];
@@ -67,7 +68,8 @@ export class ListeResponsablesComponent implements OnInit {
       ct.isSelected = this.cc.itemInCart(this.componentId, ct);
       this.allItemsSelected = this.allItemsSelected && ct.isSelected;
       this.contacts.push(ct);
-      this.contactsTotalCount = data.totalCount;
+      this.contactsItemsCount = data.totalCount;
+      this.recordsCount = data.recordsCount;
     });
   }
 
