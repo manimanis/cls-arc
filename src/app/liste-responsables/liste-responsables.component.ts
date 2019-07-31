@@ -79,14 +79,8 @@ export class ListeResponsablesComponent implements OnInit {
       });
   }
 
-  changeOrderDirection() {
-    if (this.orderDir === '') {
-      this.orderDir = 'ASC';
-    } else if (this.orderDir === 'ASC') {
-      this.orderDir = 'DESC';
-    } else if (this.orderDir === 'DESC') {
-      this.orderDir = '';
-    }
+  changeOrderDirection(orderDir = 'ASC') {
+    this.orderDir = orderDir;
     this.resp.fetchResponsables(this.searchStr, this.orderDir, 0, this.contacts.length)
       .subscribe((data: any) => {
         this.contacts = [];
@@ -156,6 +150,19 @@ export class ListeResponsablesComponent implements OnInit {
 
   toggleHelp() {
     this.helpDisplayed = !this.helpDisplayed;
+  }
+
+  // Search
+  searchPattern(searchStr: string) {
+    this.searchStr = searchStr;
+    this.pageNumber = 0;
+    this.resp.fetchResponsables(this.searchStr, this.orderDir, this.pageNumber)
+      .subscribe((data: any) => {
+        this.contacts = [];
+        this.allItemsSelected = data.data.items.length > 0;
+        this.filterData(data.data);
+        this.pageNumber++;
+      });
   }
 
 }

@@ -19,6 +19,8 @@ import { EditTypeContactComponent } from './edit-type-contact/edit-type-contact.
 import { ListeResponsablesComponent } from './liste-responsables/liste-responsables.component';
 import { ListeSelectionResponsablesComponent } from './liste-selection-responsables/liste-selection-responsables.component';
 import { AideRechercheComponent } from './aide-recherche/aide-recherche.component';
+import { SearchFieldComponent } from './search-field/search-field.component';
+import { ListeResponsablesV2Component } from './liste-responsables-v2/liste-responsables-v2.component';
 
 
 @NgModule({
@@ -36,7 +38,9 @@ import { AideRechercheComponent } from './aide-recherche/aide-recherche.componen
     EditTypeContactComponent,
     ListeResponsablesComponent,
     ListeSelectionResponsablesComponent,
-    AideRechercheComponent
+    AideRechercheComponent,
+    SearchFieldComponent,
+    ListeResponsablesV2Component
   ],
   imports: [
     BrowserModule,

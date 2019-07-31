@@ -1,0 +1,28 @@
+.summary span:not(:last-child)::after {
+  content: ' - ';
+}
+
+.numero {
+  width: 2em;
+  text-align: center;
+}
+
+.nom-prenom {
+  width: auto;
+}
+
+.select-item {
+  width: 3em;
+  text-align: center;
+}
+
+.operations {
+  width: 6em;
+  text-align: center;
+}
+
+@media screen and (max-width: 576px) {
+  .operations {
+    width: 8em;
+  }
+}

@@ -1,0 +1,17 @@
+<div class="my-2">
+  <form [formGroup]="searchForm">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text"><i class="fas fa-search"></i></span>
+      </div>
+      <input type="text" class="form-control" formControlName="searchStr" placeholder="Rechercher...">
+      <div class="input-group-append">
+        <button class="btn {{helpDisplayed ? 'btn-outline-warning' : 'btn-warning'}}" (click)="toggleHelp()"
+          [title]="helpDisplayed ? 'Cacher le message d\'aide' : 'Afficher le message d\'aide'"><i
+            class="fas fa-question"></i></button>
+      </div>
+    </div>
+
+    <aide-recherche *ngIf="helpDisplayed"></aide-recherche>
+  </form>
+</div>
