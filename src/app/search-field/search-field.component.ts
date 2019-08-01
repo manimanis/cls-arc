@@ -9,6 +9,7 @@ import { debounceTime, throttleTime } from 'rxjs/operators';
 })
 export class SearchFieldComponent implements OnInit {
 
+  @Input() searchPattern = '';
   @Input() helpDisplayed = false;
 
   @Output() searchPattenModified = new EventEmitter<string>();
@@ -19,7 +20,7 @@ export class SearchFieldComponent implements OnInit {
 
   ngOnInit() {
     this.searchForm = this.fb.group({
-      searchStr: ['']
+      searchStr: [this.searchPattern]
     });
     this.searchForm.get('searchStr').valueChanges
       .pipe(

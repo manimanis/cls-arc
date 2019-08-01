@@ -1,66 +1,31 @@
 <div id="liste-type-contact" class="container">
-  <div *ngIf="displayList">
-    <h2 class="mt-3 mb-1">Types de contacts</h2>
-    <div *ngIf="canReorder && displayMode === 'list-mode'" class="my-2">
-      <button (click)="switchToReorderMode()" class="btn btn-info">
-        <i class="fas fa-sort-alpha-down"></i> Réordonner les éléments...</button>
-    </div>
-    <div *ngIf="displayMode === 'reorder-mode'">
-      <div class="alert alert-info mt-4 mb-2">
-        Pour changer l'ordre des lignes veuillez cliquer sur les boutons dans la colonne <strong>Ordre</strong>.
-      </div>
-      <div class="my-2 clear-fix">
-        <button class="btn btn-success mr-2" [disabled]="affectedIds.length === 0" (click)="reorderItemsAndUpdate()">
-          <i class="fas fa-check"></i> Appliquer</button>
-        <button class="btn btn-secondary" (click)="switchToListMode()">
-          <i class="fas fa-times-circle"></i> Annuler</button>
-        <button class="btn btn-warning float-right" [hidden]="affectedIds.length === 0" (click)="resetItemsOrder()"><i
-            class="fas fa-recycle"></i>
-          Reset</button>
-      </div>
-    </div>
-    <table class="table table-sm table-striped table-hover">
-      <thead class="thead-dark">
-        <th class="numero">&nbsp;</th>
-        <th class="icone-picture">&nbsp;</th>
-        <th class="type-contact">Type Contact</th>
-        <th class="d-none d-sm-table-cell icone">Icône</th>
-        <th class="operations">
-          <div *ngIf="displayMode === 'list-mode' && (canEdit || canDelete)">&nbsp;</div>
-          <div *ngIf="displayMode === 'reorder-mode'">Ordre</div>
-        </th>
-      </thead>
-      <tbody>
-        <tr *ngFor="let ct of contactsTypes.items; let i = index" id="type-contact-line{{i+1}}">
-          <td><small><em>#{{i+1}}</em></small></td>
-          <td class="icone-picture"><i [class]="ct.contactIcon"></i></td>
-          <td>{{ct.contact}}</td>
-          <td class="d-none d-sm-table-cell icone">{{ct.contactIcon}}</td>
-          <td class="operations">
-            <div *ngIf="displayMode === 'list-mode' && (canEdit || canDelete)">
-              <button class="btn btn-light btn-sm m-1" title="Modifier" (click)="editTypeContact(ct)"
-                [disabled]="editMode">
-                <i class="fas fa-pencil-alt"></i>
-              </button>
-              <button class="btn btn-danger btn-sm m-1" title="Supprimer" (click)="removeTypeContact(ct)"
-                [disabled]="editMode">
-                <i class="fas fa-trash-alt"></i>
-              </button>
-            </div>
-            <div *ngIf="displayMode === 'reorder-mode'">
-              <button *ngIf="!affectedIds.includes(ct.numTypeContact); else notAffected" (click)="addToAffectedId(ct)"
-                class="btn btn-info">
-                {{notAffectedIds.indexOf(ct.numTypeContact) + affectedIds.length + 1}}
-              </button>
-              <ng-template #notAffected>
-                {{affectedIds.indexOf(ct.numTypeContact) + 1}}
-              </ng-template>
-            </div>
-          </td>
-        </tr>
-      <tbody>
-    </table>
+
+  <h2 class="mt-3 mb-1">Types de contacts</h2>
+  <div *ngIf="canReorder && displayMode === 'list-mode'" class="my-2">
+    <button (click)="switchToReorderMode()" class="btn btn-info">
+      <i class="fas fa-sort-alpha-down"></i> Réordonner les éléments...</button>
   </div>
+  <div *ngIf="displayMode === 'reorder-mode'">
+    <div class="alert alert-info mt-4 mb-2">
+      Pour changer l'ordre des lignes veuillez cliquer sur les boutons dans la colonne <strong>Ordre</strong>.
+    </div>
+    <div class="my-2 clear-fix">
+      <button class="btn btn-success mr-2" [disabled]="affectedIds.length === 0" (click)="reorderItemsAndUpdate()">
+        <i class="fas fa-check"></i> Appliquer</button>
+      <button class="btn btn-secondary" (click)="switchToListMode()">
+        <i class="fas fa-times-circle"></i> Annuler</button>
+      <button class="btn btn-warning float-right" [hidden]="affectedIds.length === 0" (click)="resetItemsOrder()"><i
+          class="fas fa-recycle"></i>
+        Reset</button>
+    </div>
+  </div>
+
+  <table-types-contacts [contactsTypes]="contactsTypes" [canEdit]="canEdit && displayMode === 'list-mode' && !editMode"
+    [canDelete]="canDelete && displayMode === 'list-mode' && !editMode"
+    [canReorder]="displayMode === 'reorder-mode' && canReorder" [affectedIds]="affectedIds"
+    [notAffectedIds]="notAffectedIds" (editButtonClicked)="editTypeContact($event)"
+    (deleteButtonClicked)="removeTypeContact($event)" (reorderButtonClicked)="addToAffectedId($event)">
+  </table-types-contacts>
 
   <div *ngIf="displayEditForm && editMode" class="border rounded p-2">
     <h5>Edition</h5>

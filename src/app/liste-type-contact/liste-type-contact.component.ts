@@ -15,7 +15,6 @@ export class ListeTypeContactComponent implements OnInit {
   @Input() canAdd = true;
   @Input() canDelete = true;
   @Input() canReorder = true;
-  @Input() displayList = true;
 
   editMode = false;
   displayEditForm = true;

@@ -3,11 +3,11 @@ import { Contact } from '../shared/contact';
 
 
 @Component({
-  selector: 'liste-responsables-v2',
-  templateUrl: './liste-responsables-v2.component.html',
-  styleUrls: ['./liste-responsables-v2.component.css']
+  selector: 'table-responsables',
+  templateUrl: './table-responsables.component.html',
+  styleUrls: ['./table-responsables.component.css']
 })
-export class ListeResponsablesV2Component implements OnInit, OnChanges {
+export class TableResponsablesComponent implements OnInit, OnChanges {
 
   @Input() contacts: Contact[] = [];
 

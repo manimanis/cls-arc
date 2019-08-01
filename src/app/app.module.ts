@@ -18,8 +18,9 @@ import { ListeResponsablesComponent } from './liste-responsables/liste-responsab
 import { ListeSelectionResponsablesComponent } from './liste-selection-responsables/liste-selection-responsables.component';
 import { AideRechercheComponent } from './aide-recherche/aide-recherche.component';
 import { SearchFieldComponent } from './search-field/search-field.component';
-import { ListeResponsablesV2Component } from './liste-responsables-v2/liste-responsables-v2.component';
+import { TableResponsablesComponent } from './table-responsables/table-responsables.component';
 import { FormEditResponsableComponent } from './form-edit-responsable/form-edit-responsable.component';
+import { TableTypesContactsComponent } from './table-types-contacts/table-types-contacts.component';
 
 
 @NgModule({
@@ -37,8 +38,9 @@ import { FormEditResponsableComponent } from './form-edit-responsable/form-edit-
     ListeSelectionResponsablesComponent,
     AideRechercheComponent,
     SearchFieldComponent,
-    ListeResponsablesV2Component,
-    FormEditResponsableComponent
+    TableResponsablesComponent,
+    FormEditResponsableComponent,
+    TableTypesContactsComponent
   ],
   imports: [
     BrowserModule,

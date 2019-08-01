@@ -1,0 +1,46 @@
+<div>
+  <table class="table table-sm table-striped table-hover">
+    <thead class="thead-dark">
+      <th class="numero">&nbsp;</th>
+      <th class="icone-picture">&nbsp;</th>
+      <th class="type-contact">Type Contact</th>
+      <th class="d-none d-sm-table-cell icone">Icône</th>
+      <th *ngIf="canEdit || canDelete || canReorder" class="operations"
+        [ngClass]="{'can-edit': canEdit, 'can-delete': canDelete, 'can-reorder': canReorder}">
+        {{canReorder ? 'Ordre' : 'Op.'}}
+      </th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ct of contactsTypes.items; let i = index" id="type-contact-line{{i+1}}">
+        <td><small><em>{{i+1}}</em></small></td>
+        <td class="icone-picture"><i [class]="ct.contactIcon"></i></td>
+        <td>{{ct.contact}}</td>
+        <td class="d-none d-sm-table-cell icone">{{ct.contactIcon}}</td>
+        <td *ngIf="canEdit || canDelete || canReorder" class="operations"
+          [ngClass]="{'can-edit': canEdit, 'can-delete': canDelete, 'can-reorder': canReorder}">
+
+          <button *ngIf="canEdit" class="btn btn-light btn-sm m-1" title="Modifier"
+            (click)="editButtonClicked.emit(ct)">
+            <i class="fas fa-pencil-alt"></i>
+          </button>
+          <button *ngIf="canDelete" class="btn btn-danger btn-sm m-1" title="Supprimer"
+            (click)="deleteButtonClicked.emit(ct)">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+
+          <ng-container *ngIf="canReorder">
+            <button *ngIf="!affectedIds.includes(ct.numTypeContact); else notAffected"
+              (click)="reorderButtonClicked.emit(ct)" class="btn btn-info">
+              {{notAffectedIds.indexOf(ct.numTypeContact) + affectedIds.length + 1}}
+            </button>
+            <ng-template #notAffected>
+              {{affectedIds.indexOf(ct.numTypeContact) + 1}}
+            </ng-template>
+          </ng-container>
+
+
+        </td>
+      </tr>
+    <tbody>
+  </table>
+</div>

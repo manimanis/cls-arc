@@ -13,8 +13,8 @@
       <span><strong># trouvés :</strong> {{contactsItemsCount}}</span>
     </div>
 
-    <liste-responsables-v2 [contacts]="contacts" (orderChanged)="changeOrderDirection($event)"
-      (itemSelection)="toggleSelection($event)" (editContactClicked)="editContact($event)"></liste-responsables-v2>
+    <table-responsables [contacts]="contacts" (orderChanged)="changeOrderDirection($event)"
+      (itemSelection)="toggleSelection($event)" (editContactClicked)="editContact($event)"></table-responsables>
 
     <div *ngIf="contactsItemsCount > contacts.length">
       <a [routerLink]="" (click)="fetchMore()">Afficher plus...</a>
@@ -28,8 +28,8 @@
       <strong>Nombre de responsables : </strong> {{selectedContacts().length}}
     </div>
 
-    <liste-responsables-v2 [contacts]="selectedContacts()" [canReorder]="false" [canSelect]="false" [canEdit]="false"
+    <table-responsables [contacts]="selectedContacts()" [canReorder]="false" [canSelect]="false" [canEdit]="false"
       [canDelete]="false" [canRemove]="true">
-    </liste-responsables-v2>
+    </table-responsables>
   </div>
 </div>
