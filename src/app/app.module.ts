@@ -13,7 +13,6 @@ import { EditFilialeComponent } from './edit-filiale/edit-filiale.component';
 import { FilialeContactComponent } from './filiale-contact/filiale-contact.component';
 import { NlToBrPipe } from './pipes/nl-to-br.pipe';
 import { ListeTypeContactComponent } from './liste-type-contact/liste-type-contact.component';
-import { EditTypeContactComponent } from './edit-type-contact/edit-type-contact.component';
 import { ListeResponsablesComponent } from './liste-responsables/liste-responsables.component';
 import { ListeSelectionResponsablesComponent } from './liste-selection-responsables/liste-selection-responsables.component';
 import { AideRechercheComponent } from './aide-recherche/aide-recherche.component';
@@ -21,6 +20,7 @@ import { SearchFieldComponent } from './search-field/search-field.component';
 import { TableResponsablesComponent } from './table-responsables/table-responsables.component';
 import { FormEditResponsableComponent } from './form-edit-responsable/form-edit-responsable.component';
 import { TableTypesContactsComponent } from './table-types-contacts/table-types-contacts.component';
+import { FormEditTypeContactComponent } from './form-edit-type-contact/form-edit-type-contact.component';
 
 
 @NgModule({
@@ -33,7 +33,7 @@ import { TableTypesContactsComponent } from './table-types-contacts/table-types-
     FilialeContactComponent,
     NlToBrPipe,
     ListeTypeContactComponent,
-    EditTypeContactComponent,
+    FormEditTypeContactComponent,
     ListeResponsablesComponent,
     ListeSelectionResponsablesComponent,
     AideRechercheComponent,

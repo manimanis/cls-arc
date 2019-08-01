@@ -29,17 +29,17 @@
 
   <div *ngIf="displayEditForm && editMode" class="border rounded p-2">
     <h5>Edition</h5>
-    <edit-type-contact [insertMode]="false" (submitData)="updateTypeContact($event)"
+    <form-edit-type-contact [insertMode]="false" (submitData)="updateTypeContact($event)"
       (cancelEditData)="cancelEditContact($event)" [typeContactCollection]="contactsTypes"
       [typeContact]="newTypeContact">
-    </edit-type-contact>
+    </form-edit-type-contact>
   </div>
 
   <div *ngIf="displayAddForm && !editMode && canAdd" class="border rounded p-2">
     <h5>Nouveau</h5>
-    <edit-type-contact [insertMode]="true" (submitData)="insertTypeContact($event)"
+    <form-edit-type-contact [insertMode]="true" (submitData)="insertTypeContact($event)"
       [typeContactCollection]="contactsTypes" [typeContact]="newTypeContact">
-    </edit-type-contact>
+    </form-edit-type-contact>
   </div>
 
 </div>

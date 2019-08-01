@@ -4,11 +4,11 @@ import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from
 import { TypeContactCollection } from '../shared/type-contact-collection';
 
 @Component({
-  selector: 'edit-type-contact',
-  templateUrl: './edit-type-contact.component.html',
-  styleUrls: ['./edit-type-contact.component.css']
+  selector: 'form-edit-type-contact',
+  templateUrl: './form-edit-type-contact.component.html',
+  styleUrls: ['./form-edit-type-contact.component.css']
 })
-export class EditTypeContactComponent implements OnInit, OnChanges {
+export class FormEditTypeContactComponent implements OnInit, OnChanges {
 
 
   static componentCount = 0;
@@ -26,8 +26,8 @@ export class EditTypeContactComponent implements OnInit, OnChanges {
 
 
   constructor(private fb: FormBuilder) {
-    EditTypeContactComponent.componentCount++;
-    this.identifier = EditTypeContactComponent.componentCount;
+    FormEditTypeContactComponent.componentCount++;
+    this.identifier = FormEditTypeContactComponent.componentCount;
   }
 
   ngOnInit() {
