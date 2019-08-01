@@ -10,10 +10,8 @@ import { FilialesListComponent } from './filiales-list/filiales-list.component';
 import { FilialeItemComponent } from './filiale-item/filiale-item.component';
 import { FabComponent } from './fab/fab.component';
 import { EditFilialeComponent } from './edit-filiale/edit-filiale.component';
-import { ContactComponent } from './contact/contact.component';
 import { FilialeContactComponent } from './filiale-contact/filiale-contact.component';
 import { NlToBrPipe } from './pipes/nl-to-br.pipe';
-import { ContactEditComponent } from './contact-edit/contact-edit.component';
 import { ListeTypeContactComponent } from './liste-type-contact/liste-type-contact.component';
 import { EditTypeContactComponent } from './edit-type-contact/edit-type-contact.component';
 import { ListeResponsablesComponent } from './liste-responsables/liste-responsables.component';
@@ -31,10 +29,8 @@ import { FormEditResponsableComponent } from './form-edit-responsable/form-edit-
     FilialeItemComponent,
     FabComponent,
     EditFilialeComponent,
-    ContactComponent,
     FilialeContactComponent,
     NlToBrPipe,
-    ContactEditComponent,
     ListeTypeContactComponent,
     EditTypeContactComponent,
     ListeResponsablesComponent,
