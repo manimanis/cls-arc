@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-sm-6 col-lg-4 my-1">
         <label for="contact-{{identifier}}"><small>Type contact (obligatoire)</small></label>
-        <input type="text" name="contact" id="contact-{{identifier}}" class="form-control"
+        <input appFocusInput type="text" name="contact" id="contact-{{identifier}}" class="form-control"
           [ngClass]="{'is-invalid': contactCtrl.invalid}" formControlName="contact" (keydown.enter)="submitForm()"
           (keydown.esc)="cancelEdit()" placeholder="Type contact">
         <div class="invalid-feedback">

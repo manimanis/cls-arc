@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { TypeContact } from '../shared/type-contact';
 import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from '@angular/forms';
 import { TypeContactCollection } from '../shared/type-contact-collection';
@@ -37,6 +37,8 @@ export class FormEditTypeContactComponent implements OnInit, OnChanges {
     });
     this.contactCtrl = this.typeContactForm.get('contact') as FormControl;
     this.typeContactForm.patchValue(this.typeContact);
+    console.log(this.typeContactForm.controls);
+    console.log('FormEditTypeContactComponent - ngOnInit()');
   }
 
   ngOnChanges(changes: SimpleChanges) {
