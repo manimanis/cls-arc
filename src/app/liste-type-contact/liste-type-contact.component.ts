@@ -20,8 +20,8 @@ export class ListeTypeContactComponent implements OnInit {
   displayEditForm = true;
   displayAddForm = true;
   displayMode = 'list-mode';
-  notAffectedIds = [];
-  affectedIds = [];
+  notOrderedItemsIds = [];
+  orderedItemsIds = [];
 
   contactsTypes = new TypeContactCollection();
   newTypeContact = new TypeContact();
@@ -47,28 +47,28 @@ export class ListeTypeContactComponent implements OnInit {
     this.displayAddForm = true;
     this.displayEditForm = true;
     this.displayMode = 'list-mode';
-    this.notAffectedIds = [];
-    this.affectedIds = [];
+    this.notOrderedItemsIds = [];
+    this.orderedItemsIds = [];
   }
 
   resetItemsOrder() {
-    this.notAffectedIds = this.contactsTypes.items.map(ct => ct.numTypeContact);
-    this.affectedIds = [];
+    this.notOrderedItemsIds = this.contactsTypes.items.map(ct => ct.numTypeContact);
+    this.orderedItemsIds = [];
   }
 
   addToAffectedId(typeContact: TypeContact) {
-    const idx = this.notAffectedIds.indexOf(typeContact.numTypeContact);
+    const idx = this.notOrderedItemsIds.indexOf(typeContact.numTypeContact);
     if (idx !== -1) {
-      this.notAffectedIds.splice(idx, 1);
-      this.affectedIds.push(typeContact.numTypeContact);
+      this.notOrderedItemsIds.splice(idx, 1);
+      this.orderedItemsIds.push(typeContact.numTypeContact);
     }
   }
 
   reorderItemsAndUpdate() {
     this.contactsTypes.items.forEach((ct, i) => {
-      let ordre = this.affectedIds.indexOf(ct.numTypeContact) + 1;
+      let ordre = this.orderedItemsIds.indexOf(ct.numTypeContact) + 1;
       if (ordre === 0) {
-        ordre = this.notAffectedIds.indexOf(ct.numTypeContact) + this.affectedIds.length + 1;
+        ordre = this.notOrderedItemsIds.indexOf(ct.numTypeContact) + this.orderedItemsIds.length + 1;
       }
       ct.contactOrder = ordre;
     });

@@ -15,8 +15,8 @@ export class TableTypesContactsComponent implements OnInit {
   @Input() canDelete = true;
   @Input() canReorder = true;
 
-  @Input() affectedIds = [];
-  @Input() notAffectedIds = [];
+  @Input() orderedItemsIds = [];
+  @Input() notOrderedItemsIds = [];
 
   @Output() editButtonClicked = new EventEmitter<TypeContact>();
   @Output() deleteButtonClicked = new EventEmitter<TypeContact>();

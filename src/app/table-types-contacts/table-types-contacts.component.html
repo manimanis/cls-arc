@@ -29,17 +29,18 @@
           </button>
 
           <ng-container *ngIf="canReorder">
-            <button *ngIf="!affectedIds.includes(ct.numTypeContact); else notAffected"
+            <button *ngIf="!orderedItemsIds.includes(ct.numTypeContact); else notOrdered"
               (click)="reorderButtonClicked.emit(ct)" class="btn btn-info">
-              {{notAffectedIds.indexOf(ct.numTypeContact) + affectedIds.length + 1}}
+              {{notOrderedItemsIds.indexOf(ct.numTypeContact) + orderedItemsIds.length + 1}}
             </button>
-            <ng-template #notAffected>
-              {{affectedIds.indexOf(ct.numTypeContact) + 1}}
+            <ng-template #notOrdered>
+              {{orderedItemsIds.indexOf(ct.numTypeContact) + 1}}
             </ng-template>
           </ng-container>
-
-
         </td>
+      </tr>
+      <tr *ngIf="contactsTypes.isEmpty()">
+        <td colspan="5">Aucune donnée trouvée</td>
       </tr>
     <tbody>
   </table>

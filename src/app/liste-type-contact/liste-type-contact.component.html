@@ -10,11 +10,11 @@
       Pour changer l'ordre des lignes veuillez cliquer sur les boutons dans la colonne <strong>Ordre</strong>.
     </div>
     <div class="my-2 clear-fix">
-      <button class="btn btn-success mr-2" [disabled]="affectedIds.length === 0" (click)="reorderItemsAndUpdate()">
+      <button class="btn btn-success mr-2" [disabled]="orderedItemsIds.length === 0" (click)="reorderItemsAndUpdate()">
         <i class="fas fa-check"></i> Appliquer</button>
       <button class="btn btn-secondary" (click)="switchToListMode()">
         <i class="fas fa-times-circle"></i> Annuler</button>
-      <button class="btn btn-warning float-right" [hidden]="affectedIds.length === 0" (click)="resetItemsOrder()"><i
+      <button class="btn btn-warning float-right" [hidden]="orderedItemsIds.length === 0" (click)="resetItemsOrder()"><i
           class="fas fa-recycle"></i>
         Reset</button>
     </div>
@@ -22,8 +22,8 @@
 
   <table-types-contacts [contactsTypes]="contactsTypes" [canEdit]="canEdit && displayMode === 'list-mode' && !editMode"
     [canDelete]="canDelete && displayMode === 'list-mode' && !editMode"
-    [canReorder]="displayMode === 'reorder-mode' && canReorder" [affectedIds]="affectedIds"
-    [notAffectedIds]="notAffectedIds" (editButtonClicked)="editTypeContact($event)"
+    [canReorder]="displayMode === 'reorder-mode' && canReorder" [orderedItemsIds]="orderedItemsIds"
+    [notOrderedItemsIds]="notOrderedItemsIds" (editButtonClicked)="editTypeContact($event)"
     (deleteButtonClicked)="removeTypeContact($event)" (reorderButtonClicked)="addToAffectedId($event)">
   </table-types-contacts>
 
