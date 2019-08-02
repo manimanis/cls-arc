@@ -2,22 +2,10 @@ import { ContactItem } from './contact-item';
 
 export class Contact {
 
-  static TYPES_CONTACT = [];
-
   numResponsable: number;
   nomPrenom: string;
   contactInfos: object;
   isSelected: boolean;
-
-  static getContactsTypes() {
-    return Contact.TYPES_CONTACT
-      .map(tc => tc.contact);
-  }
-
-  static getContactIcon(contact: string): string {
-    const ct = Contact.TYPES_CONTACT.find(cti => cti.contact === contact);
-    return (ct && ct.contactIcon) || '';
-  }
 
   constructor(obj = {}) {
     this.setData(obj);
@@ -34,6 +22,10 @@ export class Contact {
     this.addContacts(obj.contactInfos);
   }
 
+  /**
+   * Verifies if two objects contains the same numResponsable and nomPrenom.
+   * @param obj object
+   */
   equals(obj) {
     if (typeof obj === 'undefined') {
       return false;
@@ -44,17 +36,37 @@ export class Contact {
     return false;
   }
 
+  /**
+   * Return the types contacts (string value) array for the user.
+   */
+  getTypesContacts() {
+    return Object.keys(this.contactInfos);
+  }
+
+  /**
+   * Inserts a new contact item to the array.
+   * @param contactInfo ContactItem
+   */
   addContactInfo(contactInfo: ContactItem) {
     contactInfo.contact = this;
-    // if (!Contact.TYPES_CONTACT.includes(contactInfo.typeContact)) {
-    //   Contact.TYPES_CONTACT.push(contactInfo.typeContact);
-    // }
     if (!this.contactInfos[contactInfo.typeContact]) {
       this.contactInfos[contactInfo.typeContact] = [];
     }
     this.contactInfos[contactInfo.typeContact].push(contactInfo);
   }
 
+  /**
+   * Add the contact items stored in contactInfos.
+   * Example:
+   * contactInfos:
+   * {
+   *   Téléphone: [
+   *     { numContactItem: "1", numResponsable: "1", typeContact: "Téléphone", valueContact: "xx xxx xxx", remarque: "Principal" },
+   *     { numContactItem: "2", numResponsable: "1", typeContact: "Téléphone", valueContact: "40 268 787", remarque: "Secondaire" }
+   *   ], ...
+   * }
+   * @param contactInfos object
+   */
   addContacts(contactInfos: any) {
     if (!contactInfos) {
       return;
@@ -94,6 +106,11 @@ export class Contact {
     return this.contactInfos[contact];
   }
 
+  /**
+   * Creates an empty contact item for the specified type contact.
+   * And than insert it in the current contact.
+   * @param contact string
+   */
   createContactItem(contact: string) {
     const ci = new ContactItem({ typeContact: contact });
     this.addContactInfo(ci);

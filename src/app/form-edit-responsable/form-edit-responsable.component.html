@@ -4,16 +4,31 @@
       <h5><i class="fas fa-user"></i> Nom & Prénom</h5>
       <input type="text" class="form-control" formControlName="nomPrenom" placeholder="Nom & Prénom">
     </div>
-    <div *ngFor="let tc of typesContacts.items" class="my-2" [formArrayName]="tc.contact">
-      <h5><i [class]="tc.contactIcon"></i> {{tc.contact}}</h5>
-      <div *ngFor="let ci of contact.getContactsItems(tc.contact)" class="row">
-        <div class="col-sm-6">
-          <input class="form-control" placeholder="{{tc.contact}}">
-        </div>
-        <div class="col-sm-6">
-          <input class="form-control" placeholder="remarque">
-        </div>
-      </div>
+    <div *ngFor="let tc of typesContacts.items" [formArrayName]="tc.contact">
+      <h5 class="my-2"><i [class]="tc.contactIcon"></i> {{tc.contact}}</h5>
+      <table class="table table-sm">
+        <tbody>
+
+
+          <tr *ngFor="let ctrl of frm.get(tc.contact).controls; let i = index" [formGroupName]="i">
+            <td><input class="form-control" placeholder="{{tc.contact}}" formControlName="valueContact"></td>
+            <td><input class="form-control" placeholder="remarque" formControlName="remarque"></td>
+            <td><button class="btn btn-danger btn-sm" title="Supprimer..." (click)="removeContactItem(tc.contact, i)">
+                <i class="fas fa-trash-alt"></i></button></td>
+            <td>
+              <div class="btn-group text-center">
+                <button class="btn btn-dark btn-sm" *ngIf="i > 0"><i class="fas fa-arrow-up"></i></button>
+                <button class="btn btn-dark btn-sm" *ngIf="i+1 < frm.get(tc.contact).controls.length"><i
+                    class="fas fa-arrow-down"></i></button>
+              </div>
+            </td>
+          </tr>
+
+
+        </tbody>
+      </table>
+      <button class="btn btn-info btn-sm" (click)="addContactItem(tc.contact)"><i class="fas fa-plus-circle"></i>
+        Ajouter</button>
     </div>
   </form>
 </div>

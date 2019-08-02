@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { TypesContactsService } from '../services/types-contacts.service';
 import { TypeContactCollection } from '../shared/type-contact-collection';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { Contact } from '../shared/contact';
 import { ContactItem } from '../shared/contact-item';
+import { ListeResponsablesService } from '../services/liste-responsables.service';
 
 @Component({
   selector: 'form-edit-responsable',
@@ -16,32 +17,60 @@ export class FormEditResponsableComponent implements OnInit {
   typesContacts: TypeContactCollection = new TypeContactCollection();
   contact: Contact = new Contact();
 
-  constructor(private tcs: TypesContactsService, private fb: FormBuilder) { }
+  constructor(private tcs: TypesContactsService, private lrs: ListeResponsablesService, private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.frm = this.fb.group({
-      nomPrenom: ['']
-    });
+    this.initForm(this.contact);
     this.tcs.fetchContacts()
       .subscribe(() => {
         this.typesContacts = this.tcs.typesContacts;
-        this.initContactData();
+        this.initForm(this.contact);
       });
+    this.lrs.fetchResponsable(1)
+      .subscribe((data: any) => {
+        this.contact = new Contact(data.data);
+        this.initForm(this.contact);
+      });
+  }
+
+  initForm(contact: Contact) {
+    this.frm = this.fb.group({
+      nomPrenom: [contact.nomPrenom]
+    });
+
+    this.typesContacts.items.forEach(tc => {
+      const arr = this.fb.array([]);
+      if (!this.contact.hasTypeContact(tc.contact)) {
+        this.contact.createTypeContact(tc.contact);
+      }
+      this.contact.getContactsItems(tc.contact).forEach(ci => arr.push(this.buildContactItem(ci)));
+      //
+      this.frm.addControl(tc.contact, arr);
+    });
+
+    console.log(this.frm);
   }
 
   buildContactItem(ci: ContactItem) {
     return this.fb.group({
-      contactValue: [ci.valueContact],
+      typeContact: [ci.typeContact],
+      valueContact: [ci.valueContact],
       remarque: [ci.remarque]
     });
   }
 
-  initContactData() {
-    this.typesContacts.items.forEach(tc => {
-      this.contact.createTypeContact(tc.contact);
-      const ci = this.contact.createContactItem(tc.contact);
-      this.frm.setControl(tc.contact, this.fb.array([this.buildContactItem(ci)]));
-    });
+  addContactItem(contact: string) {
+    (this.frm.get(contact) as FormArray).push(this.buildContactItem(this.contact.createContactItem(contact)));
   }
 
+  removeContactItem(contact: string, idx: number) {
+    const ci = this.frm.get(contact + '.' + idx) as FormGroup;
+    console.log(ci.value);
+    if (ci.value.valueContact !== '' || ci.value.remarque !== '') {
+      if (!confirm(`Voulez vous supprimer ce contact :\n\n${ci.value.valueContact} - ${ci.value.remarque}`)) {
+        return;
+      }
+    }
+    (this.frm.get(contact) as FormArray).removeAt(idx);
+  }
 }
