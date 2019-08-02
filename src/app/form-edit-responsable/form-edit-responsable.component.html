@@ -8,9 +8,7 @@
       <h5 class="my-2"><i [class]="tc.contactIcon"></i> {{tc.contact}}</h5>
       <table class="table table-sm">
         <tbody>
-
-
-          <tr *ngFor="let ctrl of frm.get(tc.contact).controls; let i = index" [formGroupName]="i">
+          <tr *ngFor="let ctrl of frm.get(tc.contact)['controls']; let i = index" [formGroupName]="i">
             <td><input class="form-control" placeholder="{{tc.contact}}" formControlName="valueContact"></td>
             <td><input class="form-control" placeholder="remarque" formControlName="remarque"></td>
             <td><button class="btn btn-danger btn-sm" title="Supprimer..." (click)="removeContactItem(tc.contact, i)">
@@ -23,8 +21,6 @@
               </div>
             </td>
           </tr>
-
-
         </tbody>
       </table>
       <button class="btn btn-info btn-sm" (click)="addContactItem(tc.contact)"><i class="fas fa-plus-circle"></i>
