@@ -1,0 +1,7 @@
+.table td.reorder-item {
+  width: 4em;
+}
+
+.table td.remove-item {
+  width: 2em;
+}

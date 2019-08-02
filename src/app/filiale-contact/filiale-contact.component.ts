@@ -26,7 +26,7 @@ export class FilialeContactComponent implements OnInit {
   }
 
   contactTypeStyle(contactType: string): string {
-    return Contact.getContactIcon(contactType);
+    return ''; // TODO: Contact.getContactIcon(contactType);
   }
 
   toggleVisibility() {

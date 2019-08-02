@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TypesContactsService } from '../services/types-contacts.service';
 import { TypeContactCollection } from '../shared/type-contact-collection';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
@@ -12,6 +12,14 @@ import { ListeResponsablesService } from '../services/liste-responsables.service
   styleUrls: ['./form-edit-responsable.component.css']
 })
 export class FormEditResponsableComponent implements OnInit {
+
+  @Input() canRemoveItems = true;
+  @Input() canReorderItems = true;
+  @Input() canAddItems = true;
+  @Input() isNew = false;
+
+  @Output() submitContact: EventEmitter<Contact> = new EventEmitter<Contact>();
+  @Output() cancelSubmitContact: EventEmitter<string> = new EventEmitter<string>();
 
   frm: FormGroup;
   typesContacts: TypeContactCollection = new TypeContactCollection();
@@ -65,12 +73,44 @@ export class FormEditResponsableComponent implements OnInit {
 
   removeContactItem(contact: string, idx: number) {
     const ci = this.frm.get(contact + '.' + idx) as FormGroup;
-    console.log(ci.value);
     if (ci.value.valueContact !== '' || ci.value.remarque !== '') {
       if (!confirm(`Voulez vous supprimer ce contact :\n\n${ci.value.valueContact} - ${ci.value.remarque}`)) {
         return;
       }
     }
     (this.frm.get(contact) as FormArray).removeAt(idx);
+  }
+
+  swapContactsItems(contact: string, i1: number, i2: number) {
+    const fa = this.frm.get(contact) as FormArray;
+    const fc1 = fa.get(i1 + '');
+    const fc2 = fa.get(i2 + '');
+    fa.controls[i1] = fc2;
+    fa.controls[i2] = fc1;
+  }
+
+  performSubmitContact() {
+    const frmVals = this.frm.value;
+
+    const ct = new Contact({
+      numResponsable: this.contact.numResponsable,
+      nomPrenom: frmVals.nomPrenom
+    });
+    this.typesContacts.items.forEach(tc => {
+      const items = frmVals[tc.contact];
+      if (items.length > 0) {
+        items.forEach(item => ct.addContactInfo(new ContactItem({
+          typeContact: item.typeContact,
+          valueContact: item.valueContact,
+          remarque: item.remarque
+        })));
+      }
+    });
+
+    this.submitContact.emit(ct);
+  }
+
+  cancel() {
+    this.cancelSubmitContact.emit('cancel');
   }
 }

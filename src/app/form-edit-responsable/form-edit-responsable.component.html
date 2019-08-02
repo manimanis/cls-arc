@@ -1,30 +1,49 @@
 <div>
+  <h2 class="my-3">{{ isNew ? 'Nouveau Responsable' : 'Edition Responsable'}}</h2>
   <form [formGroup]="frm">
     <div class="my-2">
       <h5><i class="fas fa-user"></i> Nom & Prénom</h5>
       <input type="text" class="form-control" formControlName="nomPrenom" placeholder="Nom & Prénom">
     </div>
-    <div *ngFor="let tc of typesContacts.items" [formArrayName]="tc.contact">
+    <div *ngFor="let tc of typesContacts.items" [formArrayName]="tc.contact"
+      class="border border-dark rounded py-1 px-2 my-1">
       <h5 class="my-2"><i [class]="tc.contactIcon"></i> {{tc.contact}}</h5>
       <table class="table table-sm">
         <tbody>
           <tr *ngFor="let ctrl of frm.get(tc.contact)['controls']; let i = index" [formGroupName]="i">
-            <td><input class="form-control" placeholder="{{tc.contact}}" formControlName="valueContact"></td>
-            <td><input class="form-control" placeholder="remarque" formControlName="remarque"></td>
-            <td><button class="btn btn-danger btn-sm" title="Supprimer..." (click)="removeContactItem(tc.contact, i)">
-                <i class="fas fa-trash-alt"></i></button></td>
+            <td class="form-row">
+              <input class="form-control" placeholder="{{tc.contact}}" formControlName="valueContact">
+            </td>
             <td>
-              <div class="btn-group text-center">
-                <button class="btn btn-dark btn-sm" *ngIf="i > 0"><i class="fas fa-arrow-up"></i></button>
-                <button class="btn btn-dark btn-sm" *ngIf="i+1 < frm.get(tc.contact).controls.length"><i
-                    class="fas fa-arrow-down"></i></button>
+              <input class="form-control" placeholder="remarque" formControlName="remarque">
+            </td>
+            <td *ngIf="canRemoveItems" class="remove-item"><button class="btn btn-danger btn-sm" title="Supprimer..."
+                (click)="removeContactItem(tc.contact, i)">
+                <i class="fas fa-trash-alt"></i></button></td>
+            <td *ngIf="canReorderItems && frm.get(tc.contact)['controls'].length > 1" class="text-center reorder-item">
+              <div class="btn-group">
+                <button class="btn btn-dark btn-sm" *ngIf="i > 0" (click)="swapContactsItems(tc.contact, i, i-1)">
+                  <i class="fas fa-arrow-up" title="Monter"></i>
+                </button>
+                <button class="btn btn-dark btn-sm" *ngIf="i+1 < frm.get(tc.contact)['controls'].length"
+                  (click)="swapContactsItems(tc.contact, i, i+1)" title="Descendre">
+                  <i class="fas fa-arrow-down"></i>
+                </button>
               </div>
             </td>
           </tr>
         </tbody>
       </table>
-      <button class="btn btn-info btn-sm" (click)="addContactItem(tc.contact)"><i class="fas fa-plus-circle"></i>
+      <button *ngIf="canAddItems" class="btn btn-info btn-sm" (click)="addContactItem(tc.contact)"><i
+          class="fas fa-plus-circle"></i>
         Ajouter</button>
+    </div>
+    <div class="my-2">
+      <button *ngIf="isNew" class="btn btn-success mr-1" (click)="performSubmitContact()"><i class="fas fa-check"></i>
+        Ajouter</button>
+      <button *ngIf="!isNew" class="btn btn-success mr-1" (click)="performSubmitContact()"><i class="fas fa-check"></i>
+        Modifier</button>
+      <button class="btn btn-secondary mr-1" (click)="cancel()"><i class="fas fa-times"></i> Annuler</button>
     </div>
   </form>
 </div>
