@@ -48,7 +48,6 @@ export class Contact {
    * @param contactInfo ContactItem
    */
   addContactInfo(contactInfo: ContactItem) {
-    contactInfo.contact = this;
     if (!this.contactInfos[contactInfo.typeContact]) {
       this.contactInfos[contactInfo.typeContact] = [];
     }

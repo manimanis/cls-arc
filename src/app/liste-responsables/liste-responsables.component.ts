@@ -13,14 +13,8 @@ import { ComponentsCartService } from '../services/components-cart.service';
 })
 export class ListeResponsablesComponent implements OnInit {
 
-  @Input() canSearch = true;
-  @Input() canEdit = true;
-  @Input() canDelete = true;
-  @Input() canAdd = true;
-  @Input() canSelect = true;
   @Input() componentId = 'ListeResponsables';
-
-  @Input() helpDisplayed = false;
+  @Input() displayMode = 'list';
 
   searchStr = '';
   pageNumber = 0;
@@ -30,32 +24,16 @@ export class ListeResponsablesComponent implements OnInit {
 
   contacts: Contact[] = [];
 
+  contact: Contact;
+  isNewContact: boolean;
+
   allItemsSelected = false;
 
   searchForm: FormGroup;
 
-  constructor(private resp: ListeResponsablesService, private fb: FormBuilder, private cc: ComponentsCartService) { }
+  constructor(private resp: ListeResponsablesService, private cc: ComponentsCartService) { }
 
   ngOnInit() {
-    this.searchForm = this.fb.group({
-      searchStr: ['']
-    });
-    this.searchForm.get('searchStr').valueChanges
-      .pipe(
-        debounceTime(1000),
-        throttleTime(100)
-      )
-      .subscribe(value => {
-        this.searchStr = value;
-        this.pageNumber = 0;
-        this.resp.fetchResponsables(this.searchStr, this.orderDir, this.pageNumber)
-          .subscribe((data: any) => {
-            this.contacts = [];
-            this.allItemsSelected = data.data.items.length > 0;
-            this.filterData(data.data);
-            this.pageNumber++;
-          });
-      });
     this.fetchMore();
     this.cc.createCart(this.componentId, (cart) => {
       cart.forEach((item, i) => cart[i] = new Contact(item));
@@ -150,10 +128,6 @@ export class ListeResponsablesComponent implements OnInit {
     });
   }
 
-  toggleHelp() {
-    this.helpDisplayed = !this.helpDisplayed;
-  }
-
   // Search
   searchPattern(searchStr: string) {
     this.searchStr = searchStr;
@@ -168,7 +142,30 @@ export class ListeResponsablesComponent implements OnInit {
   }
 
   // ---------------------------------------------------------
-  editContact(contact: Contact) {
+  addNewContact() {
+    this.contact = new Contact();
+    this.isNewContact = true;
+    this.displayMode = 'edit';
+  }
 
+  editContact(contact: Contact) {
+    this.contact = contact;
+    this.isNewContact = false;
+    this.displayMode = 'edit';
+  }
+
+  saveContact(contact: Contact) {
+    console.log(contact);
+    this.resp.insertResponsable(contact)
+      .subscribe((data: any) => {
+        if (data.errors.length === 0) {
+          this.contacts.unshift(new Contact(data.data));
+          this.displayMode = 'list';
+        }
+      });
+  }
+
+  cancelEditContact() {
+    this.displayMode = 'list';
   }
 }

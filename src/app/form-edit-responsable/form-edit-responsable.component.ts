@@ -17,13 +17,14 @@ export class FormEditResponsableComponent implements OnInit {
   @Input() canReorderItems = true;
   @Input() canAddItems = true;
   @Input() isNew = false;
+  @Input() contact: Contact = new Contact();
 
   @Output() submitContact: EventEmitter<Contact> = new EventEmitter<Contact>();
   @Output() cancelSubmitContact: EventEmitter<string> = new EventEmitter<string>();
 
   frm: FormGroup;
   typesContacts: TypeContactCollection = new TypeContactCollection();
-  contact: Contact = new Contact();
+
 
   constructor(private tcs: TypesContactsService, private lrs: ListeResponsablesService, private fb: FormBuilder) { }
 
@@ -34,11 +35,11 @@ export class FormEditResponsableComponent implements OnInit {
         this.typesContacts = this.tcs.typesContacts;
         this.initForm(this.contact);
       });
-    this.lrs.fetchResponsable(1)
-      .subscribe((data: any) => {
-        this.contact = new Contact(data.data);
-        this.initForm(this.contact);
-      });
+    // this.lrs.fetchResponsable(1)
+    //   .subscribe((data: any) => {
+    //     this.contact = new Contact(data.data);
+    //     this.initForm(this.contact);
+    //   });
   }
 
   initForm(contact: Contact) {
