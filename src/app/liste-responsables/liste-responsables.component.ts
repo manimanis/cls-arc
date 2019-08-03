@@ -156,11 +156,39 @@ export class ListeResponsablesComponent implements OnInit {
 
   saveContact(contact: Contact) {
     console.log(contact);
-    this.resp.insertResponsable(contact)
+    if (this.isNewContact) {
+      this.resp.insertResponsable(contact)
+        .subscribe((data: any) => {
+          if (data.errors.length === 0) {
+            this.contacts.unshift(new Contact(data.data));
+            this.displayMode = 'list';
+          }
+        });
+    } else {
+      this.resp.updateResponsable(contact)
+        .subscribe((data: any) => {
+          if (data.errors.length === 0) {
+            const uct = this.contacts.find(ct => ct.numResponsable === +data.data.numResponsable);
+            if (uct) {
+              data.data.isSelected = contact.isSelected;
+              uct.setData(data.data);
+            }
+            this.displayMode = 'list';
+          }
+        });
+    }
+  }
+
+  deleteContact(contact: Contact) {
+    if (!confirm(`Etes-sûr de vouloir supprimer ce responsable :
+${contact.nomPrenom} ?`)) {
+      return;
+    }
+    this.resp.deleteResponsable(contact)
       .subscribe((data: any) => {
-        if (data.errors.length === 0) {
-          this.contacts.unshift(new Contact(data.data));
-          this.displayMode = 'list';
+        const idx = this.contacts.reduce((last, curr, i) => (curr.numResponsable === contact.numResponsable) ? i : last, -1);
+        if (idx !== -1) {
+          this.contacts.splice(idx, 1);
         }
       });
   }

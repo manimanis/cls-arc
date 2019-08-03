@@ -95,7 +95,8 @@ export class FormEditResponsableComponent implements OnInit {
 
     const ct = new Contact({
       numResponsable: this.contact.numResponsable,
-      nomPrenom: frmVals.nomPrenom
+      nomPrenom: frmVals.nomPrenom,
+      isSelected: this.contact.isSelected
     });
     this.typesContacts.items.forEach(tc => {
       const items = frmVals[tc.contact];

@@ -19,7 +19,8 @@
     </div>
 
     <table-responsables [contacts]="contacts" (orderChanged)="changeOrderDirection($event)"
-      (itemSelection)="toggleSelection($event)" (editContactClicked)="editContact($event)"></table-responsables>
+      (itemSelection)="toggleSelection($event)" (editContactClicked)="editContact($event)"
+      (deleteContactClicked)="deleteContact($event)"></table-responsables>
 
     <div *ngIf="contactsItemsCount > contacts.length">
       <a [routerLink]="" (click)="fetchMore()">Afficher plus...</a>

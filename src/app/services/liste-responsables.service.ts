@@ -37,6 +37,23 @@ export class ListeResponsablesService {
       );
   }
 
+  updateResponsable(contact: Contact) {
+    return this.http
+      .put(`${this.API_BASE_URL}/${this.API_PATH}/${contact.numResponsable}`,
+        JSON.stringify(contact))
+      .pipe(
+        catchError(this.handleErrors)
+      );
+  }
+
+  deleteResponsable(contact: Contact) {
+    return this.http
+      .delete(`${this.API_BASE_URL}/${this.API_PATH}/${contact.numResponsable}`)
+      .pipe(
+        catchError(this.handleErrors)
+      );
+  }
+
   private handleErrors(error) {
     //this.isFetchingData = false;
     if (error.error instanceof ErrorEvent) {
