@@ -1,7 +1,3 @@
-.summary span:not(:last-child)::after {
-  content: ' - ';
-}
-
 .numero {
   width: 2em;
   text-align: center;

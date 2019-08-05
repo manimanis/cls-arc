@@ -5,10 +5,24 @@ export class Contact {
   numResponsable: number;
   nomPrenom: string;
   contactInfos: object;
-  isSelected: boolean;
 
   constructor(obj = {}) {
     this.setData(obj);
+  }
+
+  /**
+   * Verifies if two objects contains the same numResponsable and nomPrenom.
+   * @param obj1 object
+   * @param obj2 object
+   */
+  static equals(obj1, obj2): boolean {
+    if (obj1 === null || obj2 === null || typeof obj1 === 'undefined' || typeof obj2 === 'undefined') {
+      return false;
+    }
+    if (obj1.numResponsable === obj2.numResponsable && obj1.nomPrenom === obj2.nomPrenom) {
+      return true;
+    }
+    return false;
   }
 
   setData(obj) {
@@ -17,24 +31,11 @@ export class Contact {
     }
     this.numResponsable = +obj.numResponsable || 0;
     this.nomPrenom = obj.nomPrenom || '';
-    this.isSelected = !!obj.isSelected;
     this.contactInfos = {};
     this.addContacts(obj.contactInfos);
   }
 
-  /**
-   * Verifies if two objects contains the same numResponsable and nomPrenom.
-   * @param obj object
-   */
-  equals(obj) {
-    if (typeof obj === 'undefined') {
-      return false;
-    }
-    if (this.numResponsable === obj.numResponsable && this.nomPrenom === obj.nomPrenom) {
-      return true;
-    }
-    return false;
-  }
+
 
   /**
    * Return the types contacts (string value) array for the user.

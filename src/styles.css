@@ -9,3 +9,9 @@
     font-size: 0.75em;
   }
 }
+
+/* used in select-responsables, liste-responsables */
+
+.summary span:not(:last-child)::after {
+  content: ' - ';
+}

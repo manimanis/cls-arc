@@ -28,34 +28,36 @@ export class ComponentsCartService {
     return this.cart[compId];
   }
 
-  itemInCart(compId: string, item: any) {
+  itemInCart(compId: string, item: any, equals: (it1, it2) => boolean) {
     const cart = this.getCart(compId);
     for (const cartItem of cart) {
-      if (cartItem.equals(item)) {
+      if (equals(cartItem, item)) {
         return true;
       }
     }
     return false;
   }
 
-  indexOfItem(compId: string, item: any) {
+  indexOfItem(compId: string, item: any, equals: (it1, it2) => boolean) {
     const cart = this.getCart(compId);
     for (let i = 0; i < cart.length; i++) {
-      if (cart[i].equals(item)) {
+      if (equals(item, cart[i])) {
         return i;
       }
     }
     return -1;
   }
 
-  addToCart(compId: string, item: any) {
-    const cart = this.getCart(compId);
-    cart.push(item);
-    this.saveCart();
+  addToCart(compId: string, item: any, equals: (it1, it2) => boolean) {
+    if (!this.itemInCart(compId, item, equals)) {
+      const cart = this.getCart(compId);
+      cart.push(item);
+      this.saveCart();
+    }
   }
 
-  removeFromCart(compId: string, item: any) {
-    const idx = this.indexOfItem(compId, item);
+  removeFromCart(compId: string, item: any, equals: (it1, it2) => boolean) {
+    const idx = this.indexOfItem(compId, item, equals);
     const cart = this.getCart(compId);
     if (idx !== -1) {
       cart.splice(idx, 1);

@@ -13,7 +13,6 @@ import { ComponentsCartService } from '../services/components-cart.service';
 })
 export class ListeResponsablesComponent implements OnInit {
 
-  @Input() componentId = 'ListeResponsables';
   @Input() displayMode = 'list';
 
   searchStr = '';
@@ -27,24 +26,15 @@ export class ListeResponsablesComponent implements OnInit {
   contact: Contact;
   isNewContact: boolean;
 
-  allItemsSelected = false;
-
-  searchForm: FormGroup;
-
   constructor(private resp: ListeResponsablesService, private cc: ComponentsCartService) { }
 
   ngOnInit() {
     this.fetchMore();
-    this.cc.createCart(this.componentId, (cart) => {
-      cart.forEach((item, i) => cart[i] = new Contact(item));
-    });
   }
 
   filterData(data: any) {
     data.items.forEach(item => {
       const ct = new Contact(item);
-      ct.isSelected = this.cc.itemInCart(this.componentId, ct);
-      this.allItemsSelected = this.allItemsSelected && ct.isSelected;
       this.contacts.push(ct);
       this.contactsItemsCount = data.totalCount;
       this.recordsCount = data.recordsCount;
@@ -64,7 +54,6 @@ export class ListeResponsablesComponent implements OnInit {
     this.resp.fetchResponsables(this.searchStr, this.orderDir, 0, this.contacts.length)
       .subscribe((data: any) => {
         this.contacts = [];
-        this.allItemsSelected = data.data.items.length > 0;
         this.filterData(data.data);
       });
   }
@@ -76,58 +65,6 @@ export class ListeResponsablesComponent implements OnInit {
     }
   }
 
-  checkSelection() {
-    this.allItemsSelected = this.contacts.length > 0;
-    this.contacts.forEach(ct => {
-      this.allItemsSelected = this.allItemsSelected && this.cc.itemInCart(this.componentId, ct);
-    });
-  }
-
-  selectContact(contact: Contact) {
-    if (!this.cc.itemInCart(this.componentId, contact)) {
-      this.cc.addToCart(this.componentId, contact);
-    }
-    contact.isSelected = true;
-  }
-
-  deselectContact(contact: Contact) {
-    if (this.cc.itemInCart(this.componentId, contact)) {
-      this.cc.removeFromCart(this.componentId, contact);
-    }
-    contact.isSelected = false;
-  }
-
-  toggleSelection(contact: Contact) {
-    if (!this.cc.itemInCart(this.componentId, contact)) {
-      contact.isSelected = true;
-      this.cc.addToCart(this.componentId, contact);
-      this.checkSelection();
-    } else {
-      contact.isSelected = false;
-      this.allItemsSelected = false;
-      this.cc.removeFromCart(this.componentId, contact);
-    }
-  }
-
-  toggleSelectAll() {
-    this.selectAllItems(!this.allItemsSelected);
-  }
-
-  selectedContacts(): Contact[] {
-    return this.cc.getCart(this.componentId);
-  }
-
-  selectAllItems(select: boolean) {
-    this.allItemsSelected = select;
-    this.contacts.forEach(ct => {
-      if (this.allItemsSelected) {
-        this.selectContact(ct);
-      } else {
-        this.deselectContact(ct);
-      }
-    });
-  }
-
   // Search
   searchPattern(searchStr: string) {
     this.searchStr = searchStr;
@@ -135,7 +72,6 @@ export class ListeResponsablesComponent implements OnInit {
     this.resp.fetchResponsables(this.searchStr, this.orderDir, this.pageNumber)
       .subscribe((data: any) => {
         this.contacts = [];
-        this.allItemsSelected = data.data.items.length > 0;
         this.filterData(data.data);
         this.pageNumber++;
       });
@@ -169,7 +105,6 @@ export class ListeResponsablesComponent implements OnInit {
           if (data.errors.length === 0) {
             const uct = this.contacts.find(ct => ct.numResponsable === +data.data.numResponsable);
             if (uct) {
-              data.data.isSelected = contact.isSelected;
               uct.setData(data.data);
             }
             this.displayMode = 'list';

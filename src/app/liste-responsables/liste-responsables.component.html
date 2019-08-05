@@ -19,23 +19,12 @@
     </div>
 
     <table-responsables [contacts]="contacts" (orderChanged)="changeOrderDirection($event)"
-      (itemSelection)="toggleSelection($event)" (editContactClicked)="editContact($event)"
-      (deleteContactClicked)="deleteContact($event)"></table-responsables>
+      (editContactClicked)="editContact($event)" (deleteContactClicked)="deleteContact($event)" [canSelect]="false">
+    </table-responsables>
 
     <div *ngIf="contactsItemsCount > contacts.length">
       <a [routerLink]="" (click)="fetchMore()">Afficher plus...</a>
     </div>
   </div>
 
-  <div *ngIf="displayMode === 'selection' && selectedContacts().length > 0">
-    <h2 class="mt-3 mb-1">Eléments sélectionnés</h2>
-
-    <div class="alert alert-info my-2">
-      <strong>Nombre de responsables : </strong> {{selectedContacts().length}}
-    </div>
-
-    <table-responsables [contacts]="selectedContacts()" [canReorder]="false" [canSelect]="false" [canEdit]="false"
-      [canDelete]="false" [canRemove]="true">
-    </table-responsables>
-  </div>
 </div>

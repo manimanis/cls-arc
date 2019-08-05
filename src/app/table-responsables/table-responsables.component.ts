@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, DoCheck, AfterContentChecked } from '@angular/core';
 import { Contact } from '../shared/contact';
+import { ComponentsCartService } from '../services/components-cart.service';
 
 
 @Component({
@@ -7,8 +8,9 @@ import { Contact } from '../shared/contact';
   templateUrl: './table-responsables.component.html',
   styleUrls: ['./table-responsables.component.css']
 })
-export class TableResponsablesComponent implements OnInit, OnChanges {
+export class TableResponsablesComponent implements OnInit, OnChanges, AfterContentChecked {
 
+  @Input() selectionCartName: string;
   @Input() contacts: Contact[] = [];
 
   @Input() canSelect = true;
@@ -28,31 +30,51 @@ export class TableResponsablesComponent implements OnInit, OnChanges {
   @Output() deleteContactClicked = new EventEmitter<Contact>();
   @Output() removeContactClicked = new EventEmitter<Contact>();
 
+  selectionMap = [];
+
   hasAllItemsSelected = false;
 
-  constructor() { }
+  constructor(private cc: ComponentsCartService) { }
 
   ngOnInit() {
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
-    if (changes.contacts) {
+  ngOnChanges(changes: SimpleChanges) { }
+
+  ngAfterContentChecked(): void {
+    if (this.selectionMap.length !== this.contacts.length) {
+      this.updateSelectionMap();
       this.refreshAllItemsSelected();
     }
   }
 
+  private updateSelectionMap() {
+    if (this.selectionMap.length !== this.contacts.length) {
+      this.selectionMap = this.contacts.map(ct => this.cc.itemInCart(this.selectionCartName, ct, Contact.equals));
+    }
+  }
+
+  isSelected(idx: number) {
+    return (idx >= 0 && idx < this.selectionMap.length) ? this.selectionMap[idx] : false;
+  }
+
   selectAllItems(selectAll: boolean) {
-    this.hasAllItemsSelected = selectAll;
-    this.contacts.forEach(ct => {
-      this.selectContact(ct, selectAll);
+    this.contacts.forEach((ct, i) => {
+      this.selectContact(i, selectAll);
     });
+    this.hasAllItemsSelected = selectAll;
     this.allItemsSelection.emit(selectAll);
   }
 
-  selectContact(contact: Contact, select: boolean) {
-    contact.isSelected = select;
-    if (!contact.isSelected) {
+  selectContact(idx: number, select: boolean) {
+    const contact = this.contacts[idx];
+    this.selectionMap[idx] = select;
+    if (!select) {
+      this.cc.removeFromCart(this.selectionCartName, contact, Contact.equals);
+    } else {
+      this.cc.addToCart(this.selectionCartName, contact, Contact.equals);
+    }
+    if (!select) {
       this.hasAllItemsSelected = false;
     } else {
       this.refreshAllItemsSelected();
@@ -61,17 +83,14 @@ export class TableResponsablesComponent implements OnInit, OnChanges {
   }
 
   refreshAllItemsSelected() {
-    if (!this.contacts || this.contacts.length === 0) {
-      this.hasAllItemsSelected = false;
-      return;
-    }
-    for (const ct of this.contacts) {
-      if (!ct.isSelected) {
+    this.hasAllItemsSelected = this.selectionMap.length > 0;
+    for (let i = 0; i < this.selectionMap.length; i++) {
+      if (!this.selectionMap[i]) {
         this.hasAllItemsSelected = false;
-        return;
+        break;
       }
     }
-    this.hasAllItemsSelected = true;
+    return this.hasAllItemsSelected;
   }
 
   changeOrderDirection() {
@@ -93,8 +112,9 @@ export class TableResponsablesComponent implements OnInit, OnChanges {
     this.deleteContactClicked.emit(contact);
   }
 
-  removeContact(contact: Contact) {
-    this.removeContactClicked.emit(contact);
+  removeContact(idx: number) {
+    this.selectContact(idx, false);
+    this.removeContactClicked.emit(this.contacts[idx]);
   }
 
 }

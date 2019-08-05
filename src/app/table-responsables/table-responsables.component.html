@@ -15,15 +15,20 @@
           Nom & Prénom
         </th>
         <th *ngIf="hasOperations" class="operations"
-          [ngClass]="{'can-edit': canEdit, 'can-delete': canDelete, 'can-remove': canRemove}">&nbsp;</th>
+          [ngClass]="{'can-edit': canEdit, 'can-delete': canDelete, 'can-remove': canRemove}">
+          <button *ngIf="canRemove" class="btn btn-info btn-sm m-1" title="Annuler la sélection."
+            (click)="selectAllItems(false)">
+            <i class="fas fa-times"></i>
+          </button>
+        </th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let ct of contacts; let i = index">
         <td class="d-none d-sm-table-cell numero"><small><em>{{i+1}}</em></small></td>
         <td *ngIf="canSelect" class="select-item">
-          <input type="checkbox" class="btn btn-info btn-sm m-1" [(ngModel)]="ct.isSelected"
-            (click)="selectContact(ct, !ct.isSelected)">
+          <input type="checkbox" class="btn btn-info btn-sm m-1" [checked]="isSelected(i)"
+            (click)="selectContact(i, !isSelected(i))">
         </td>
         <td class="nom-prenom">{{ct.nomPrenom}}</td>
         <td *ngIf="hasOperations" class="operations"
@@ -35,7 +40,7 @@
             <i class="fas fa-trash-alt"></i>
           </button>
           <button *ngIf="canRemove" class="btn btn-info btn-sm m-1" title="Annuler la sélection."
-            (click)="removeContact(ct)">
+            (click)="removeContact(i)">
             <i class="fas fa-times"></i>
           </button>
         </td>

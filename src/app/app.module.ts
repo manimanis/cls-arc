@@ -22,6 +22,7 @@ import { FormEditResponsableComponent } from './form-edit-responsable/form-edit-
 import { TableTypesContactsComponent } from './table-types-contacts/table-types-contacts.component';
 import { FormEditTypeContactComponent } from './form-edit-type-contact/form-edit-type-contact.component';
 import { FocusInputDirective } from './directives/focus-input.directive';
+import { SelectResponsablesComponent } from './select-responsables/select-responsables.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { FocusInputDirective } from './directives/focus-input.directive';
     TableResponsablesComponent,
     FormEditResponsableComponent,
     TableTypesContactsComponent,
-    FocusInputDirective
+    FocusInputDirective,
+    SelectResponsablesComponent
   ],
   imports: [
     BrowserModule,

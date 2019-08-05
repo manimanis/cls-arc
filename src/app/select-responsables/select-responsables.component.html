@@ -1,0 +1,33 @@
+<div id="select-responsables" class="container">
+  <div>
+    <small><em>Pour afficher la liste de contacts veuillez taper un critère de recherche.</em></small>
+    <search-field class="my-2" (searchPattenModified)="searchPattern($event)"></search-field>
+  </div>
+
+
+  <div *ngIf="searchStr !== ''">
+    <div class="summary small">
+      <span><strong># Total :</strong> {{recordsCount}}</span>
+      <span><strong># affichés : </strong> {{contacts.length}}</span>
+      <span><strong># trouvés :</strong> {{contactsItemsCount}}</span>
+    </div>
+
+    <table-responsables [contacts]="contacts" (orderChanged)="changeOrderDirection($event)"
+      (itemSelection)="toggleSelection($event)" [canEdit]="false" [canDelete]="false" [canRemove]="false"
+      [canSelect]="true" [canReorder]="true" [selectionCartName]="componentId"></table-responsables>
+
+    <div *ngIf="contactsItemsCount > contacts.length">
+      <a [routerLink]="" (click)="fetchMore()">Afficher plus...</a>
+    </div>
+  </div>
+
+  <h2 class="mt-3 mb-1">Eléments sélectionnés</h2>
+
+  <div class="alert alert-info my-2">
+    <strong>Nombre de responsables : </strong> {{selectedContacts().length}}
+  </div>
+
+  <table-responsables [contacts]="selectedContacts()" [canReorder]="false" [canSelect]="false" [canEdit]="false"
+    [canDelete]="false" [canRemove]="true" [selectionCartName]="componentId">
+  </table-responsables>
+</div>
