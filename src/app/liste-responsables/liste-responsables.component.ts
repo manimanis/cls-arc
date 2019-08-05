@@ -155,7 +155,6 @@ export class ListeResponsablesComponent implements OnInit {
   }
 
   saveContact(contact: Contact) {
-    console.log(contact);
     if (this.isNewContact) {
       this.resp.insertResponsable(contact)
         .subscribe((data: any) => {

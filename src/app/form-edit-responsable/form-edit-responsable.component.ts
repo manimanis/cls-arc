@@ -1,10 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TypesContactsService } from '../services/types-contacts.service';
 import { TypeContactCollection } from '../shared/type-contact-collection';
-import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators, AbstractControl } from '@angular/forms';
 import { Contact } from '../shared/contact';
 import { ContactItem } from '../shared/contact-item';
 import { ListeResponsablesService } from '../services/liste-responsables.service';
+import { CustomValidators } from '../validators/custom-validators';
 
 @Component({
   selector: 'form-edit-responsable',
@@ -44,7 +45,7 @@ export class FormEditResponsableComponent implements OnInit {
 
   initForm(contact: Contact) {
     this.frm = this.fb.group({
-      nomPrenom: [contact.nomPrenom]
+      nomPrenom: [contact.nomPrenom, [Validators.required, Validators.pattern('^[a-zA-Z\u00C0-\u017F]{3,}[a-zA-Z\u00C0-\u017F ]*$')]]
     });
 
     this.typesContacts.items.forEach(tc => {
@@ -57,13 +58,12 @@ export class FormEditResponsableComponent implements OnInit {
       this.frm.addControl(tc.contact, arr);
     });
 
-    console.log(this.frm);
   }
 
   buildContactItem(ci: ContactItem) {
     return this.fb.group({
       typeContact: [ci.typeContact],
-      valueContact: [ci.valueContact],
+      valueContact: [ci.valueContact, CustomValidators.getValidators(ci.typeContact)],
       remarque: [ci.remarque]
     });
   }
@@ -86,8 +86,10 @@ export class FormEditResponsableComponent implements OnInit {
     const fa = this.frm.get(contact) as FormArray;
     const fc1 = fa.get(i1 + '');
     const fc2 = fa.get(i2 + '');
-    fa.controls[i1] = fc2;
-    fa.controls[i2] = fc1;
+    const v1 = fc1.value;
+    const v2 = fc2.value;
+    fc1.patchValue(v2);
+    fc2.patchValue(v1);
   }
 
   performSubmitContact() {
@@ -114,5 +116,9 @@ export class FormEditResponsableComponent implements OnInit {
 
   cancel() {
     this.cancelSubmitContact.emit('cancel');
+  }
+
+  isValueContactInvalid(c: AbstractControl) {
+    return (c.invalid) ? 'is-invalid' : 'is-valid';
   }
 }
