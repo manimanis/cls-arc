@@ -34,23 +34,25 @@ export class TableResponsablesComponent implements OnInit, OnChanges, AfterConte
 
   hasAllItemsSelected = false;
 
+  contactsPropertyChanged = false;
+
   constructor(private cc: ComponentsCartService) { }
 
   ngOnInit() {
   }
 
-  ngOnChanges(changes: SimpleChanges) { }
-
-  ngAfterContentChecked(): void {
-    if (this.selectionMap.length !== this.contacts.length) {
-      this.updateSelectionMap();
-      this.refreshAllItemsSelected();
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
+    if (changes.contacts) {
+      this.contactsPropertyChanged = true;
     }
   }
 
-  private updateSelectionMap() {
-    if (this.selectionMap.length !== this.contacts.length) {
+  ngAfterContentChecked(): void {
+    if (this.contactsPropertyChanged) {
       this.selectionMap = this.contacts.map(ct => this.cc.itemInCart(this.selectionCartName, ct, Contact.equals));
+      this.refreshAllItemsSelected();
+      this.contactsPropertyChanged = false;
     }
   }
 
@@ -59,14 +61,14 @@ export class TableResponsablesComponent implements OnInit, OnChanges, AfterConte
   }
 
   selectAllItems(selectAll: boolean) {
-    this.contacts.forEach((ct, i) => {
-      this.selectContact(i, selectAll);
-    });
+    for (let i = this.contacts.length - 1; i >= 0; i--) {
+      this.selectContact(i, selectAll, false);
+    }
     this.hasAllItemsSelected = selectAll;
     this.allItemsSelection.emit(selectAll);
   }
 
-  selectContact(idx: number, select: boolean) {
+  selectContact(idx: number, select: boolean, emitEvent: boolean = true) {
     const contact = this.contacts[idx];
     this.selectionMap[idx] = select;
     if (!select) {
@@ -79,7 +81,9 @@ export class TableResponsablesComponent implements OnInit, OnChanges, AfterConte
     } else {
       this.refreshAllItemsSelected();
     }
-    this.itemSelection.emit(contact);
+    if (emitEvent) {
+      this.itemSelection.emit(contact);
+    }
   }
 
   refreshAllItemsSelected() {

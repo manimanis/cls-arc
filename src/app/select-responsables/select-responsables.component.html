@@ -24,10 +24,10 @@
   <h2 class="mt-3 mb-1">Eléments sélectionnés</h2>
 
   <div class="alert alert-info my-2">
-    <strong>Nombre de responsables : </strong> {{selectedContacts().length}}
+    <strong>Nombre de responsables : </strong> {{selectedContacts.length}}
   </div>
 
-  <table-responsables [contacts]="selectedContacts()" [canReorder]="false" [canSelect]="false" [canEdit]="false"
+  <table-responsables [contacts]="selectedContacts" [canReorder]="false" [canSelect]="false" [canEdit]="false"
     [canDelete]="false" [canRemove]="true" [selectionCartName]="componentId">
   </table-responsables>
 </div>

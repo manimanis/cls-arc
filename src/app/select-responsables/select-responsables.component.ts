@@ -19,6 +19,7 @@ export class SelectResponsablesComponent implements OnInit {
   orderDir = 'ASC';
 
   contacts: Contact[] = [];
+  selectedContacts: Contact[];
 
   contact: Contact;
 
@@ -27,6 +28,7 @@ export class SelectResponsablesComponent implements OnInit {
   constructor(private resp: ListeResponsablesService, private cc: ComponentsCartService) { }
 
   ngOnInit() {
+    this.selectedContacts = this.cc.getCart(this.componentId);
   }
 
   // Search
@@ -67,10 +69,6 @@ export class SelectResponsablesComponent implements OnInit {
       this.contactsItemsCount = data.totalCount;
       this.recordsCount = data.recordsCount;
     });
-  }
-
-  selectedContacts(): Contact[] {
-    return this.cc.getCart(this.componentId);
   }
 
   toggleSelection(contact: Contact) {
