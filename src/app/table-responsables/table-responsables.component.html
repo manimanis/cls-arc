@@ -3,7 +3,7 @@
     <thead class="thead-dark">
       <tr>
         <th class="d-none d-sm-table-cell numero">#</th>
-        <th *ngIf="canSelect && contacts.length > 0" class="select-item">
+        <th *ngIf="canSelect && contactsItems.length > 0" class="select-item">
           <input type="checkbox" class="btn btn-info btn-sm m-1" [(ngModel)]="hasAllItemsSelected"
             (click)="selectAllItems(!hasAllItemsSelected)">
         </th>
@@ -16,15 +16,15 @@
         </th>
         <th *ngIf="hasOperations" class="operations"
           [ngClass]="{'can-edit': canEdit, 'can-delete': canDelete, 'can-remove': canRemove}">
-          <button *ngIf="canRemove && contacts.length > 0" class="btn btn-info btn-sm m-1" title="Annuler la sélection."
-            (click)="selectAllItems(false)">
+          <button *ngIf="canRemove && contactsItems.length > 0" class="btn btn-info btn-sm m-1"
+            title="Annuler la sélection." (click)="selectAllItems(false)">
             <i class="fas fa-times"></i>
           </button>
         </th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let ct of contacts; let i = index">
+      <tr *ngFor="let ct of contactsItems; let i = index">
         <td class="d-none d-sm-table-cell numero"><small><em>{{i+1}}</em></small></td>
         <td *ngIf="canSelect" class="select-item">
           <input type="checkbox" class="btn btn-info btn-sm m-1" [checked]="isSelected(i)"
@@ -40,13 +40,13 @@
             <i class="fas fa-trash-alt"></i>
           </button>
           <button *ngIf="canRemove" class="btn btn-info btn-sm m-1" title="Annuler la sélection."
-            (click)="removeContact(i)">
+            (click)="selectContact(i, false)">
             <i class="fas fa-times"></i>
           </button>
         </td>
       </tr>
       <tr>
-        <td *ngIf="contacts.length === 0" colspan="4" class="p-2 text-center">Aucun résultat à afficher</td>
+        <td *ngIf="contactsItems.length === 0" colspan="4" class="p-2 text-center">Aucun résultat à afficher</td>
       </tr>
     </tbody>
   </table>

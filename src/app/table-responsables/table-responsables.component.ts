@@ -11,7 +11,14 @@ import { ComponentsCartService } from '../services/components-cart.service';
 export class TableResponsablesComponent implements OnInit, OnChanges, AfterContentChecked {
 
   @Input() selectionCartName: string;
-  @Input() contacts: Contact[] = [];
+  @Input() get contacts() {
+    return this.contactsItems;
+  }
+  set contacts(items: Contact[]) {
+    this.contactsItems = items;
+    this.selectionMap = this.contacts.map(ct => this.cc.itemInCart(this.selectionCartName, ct, Contact.equals));
+    this.refreshAllItemsSelected();
+  }
 
   @Input() canSelect = true;
   @Output() allItemsSelection = new EventEmitter<boolean>();
@@ -30,11 +37,10 @@ export class TableResponsablesComponent implements OnInit, OnChanges, AfterConte
   @Output() deleteContactClicked = new EventEmitter<Contact>();
   @Output() removeContactClicked = new EventEmitter<Contact>();
 
+  contactsItems: Contact[] = [];
   selectionMap = [];
 
   hasAllItemsSelected = false;
-
-  contactsPropertyChanged = false;
 
   constructor(private cc: ComponentsCartService) { }
 
@@ -43,18 +49,9 @@ export class TableResponsablesComponent implements OnInit, OnChanges, AfterConte
 
   ngOnChanges(changes: SimpleChanges) {
     console.log(changes);
-    if (changes.contacts) {
-      this.contactsPropertyChanged = true;
-    }
   }
 
-  ngAfterContentChecked(): void {
-    if (this.contactsPropertyChanged) {
-      this.selectionMap = this.contacts.map(ct => this.cc.itemInCart(this.selectionCartName, ct, Contact.equals));
-      this.refreshAllItemsSelected();
-      this.contactsPropertyChanged = false;
-    }
-  }
+  ngAfterContentChecked(): void { }
 
   isSelected(idx: number) {
     return (idx >= 0 && idx < this.selectionMap.length) ? this.selectionMap[idx] : false;

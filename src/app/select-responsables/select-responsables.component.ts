@@ -35,7 +35,7 @@ export class SelectResponsablesComponent implements OnInit {
   searchPattern(searchStr: string) {
     this.searchStr = searchStr;
     this.pageNumber = 0;
-    this.resp.fetchResponsables(this.searchStr, this.orderDir, this.pageNumber, 5)
+    this.resp.fetchResponsables(this.searchStr, this.orderDir, this.pageNumber, 10)
       .subscribe((data: any) => {
         this.contacts = [];
         this.allItemsSelected = data.data.items.length > 0;
@@ -45,8 +45,9 @@ export class SelectResponsablesComponent implements OnInit {
   }
 
   fetchMore() {
-    this.resp.fetchResponsables(this.searchStr, this.orderDir, this.pageNumber, 5)
+    this.resp.fetchResponsables(this.searchStr, this.orderDir, this.pageNumber, 10)
       .subscribe((data: any) => {
+        this.contacts = this.contacts.slice(0);
         this.filterData(data.data);
         this.pageNumber++;
       });
@@ -71,19 +72,9 @@ export class SelectResponsablesComponent implements OnInit {
     });
   }
 
-  toggleSelection(contact: Contact) {
-    // if (!this.cc.itemInCart(this.componentId, contact, Contact.equals)) {
-    //   contact.isSelected = true;
-    //   this.cc.addToCart(this.componentId, contact);
-    //   this.checkSelection();
-    // } else {
-    //   contact.isSelected = false;
-    //   this.allItemsSelected = false;
-    //   this.cc.removeFromCart(this.componentId, contact, Contact.equals);
-    // }
-  }
-
-  toggleSelectAll() {
-    // this.selectAllItems(!this.allItemsSelected);
+  updateSelection() {
+    // OnChanges Lifecycle Hook will trigger only when input property's instance changes.
+    // so we are notifying others table-responsables components about the selection change
+    this.contacts = this.contacts.slice(0);
   }
 }

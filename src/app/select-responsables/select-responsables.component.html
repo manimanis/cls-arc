@@ -12,9 +12,9 @@
       <span><strong># trouvés :</strong> {{contactsItemsCount}}</span>
     </div>
 
-    <table-responsables [contacts]="contacts" (orderChanged)="changeOrderDirection($event)"
-      (itemSelection)="toggleSelection($event)" [canEdit]="false" [canDelete]="false" [canRemove]="false"
-      [canSelect]="true" [canReorder]="true" [selectionCartName]="componentId"></table-responsables>
+    <table-responsables [contacts]="contacts" (orderChanged)="changeOrderDirection($event)" [canEdit]="false"
+      [canDelete]="false" [canRemove]="false" [canSelect]="true" [canReorder]="true" [selectionCartName]="componentId">
+    </table-responsables>
 
     <div *ngIf="contactsItemsCount > contacts.length">
       <a [routerLink]="" (click)="fetchMore()">Afficher plus...</a>
@@ -28,6 +28,7 @@
   </div>
 
   <table-responsables [contacts]="selectedContacts" [canReorder]="false" [canSelect]="false" [canEdit]="false"
-    [canDelete]="false" [canRemove]="true" [selectionCartName]="componentId">
+    [canDelete]="false" [canRemove]="true" [selectionCartName]="componentId" (itemSelection)="updateSelection()"
+    (allItemsSelection)="updateSelection()">
   </table-responsables>
 </div>
