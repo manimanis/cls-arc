@@ -1,19 +1,19 @@
-<div class="filiale-contact">
+<div class="card-responsable">
   <div class="card my-2">
     <div class="card-header">
-      <h6>Contact : <em>{{contact.nomPrenom}}</em></h6>
-      <div class="d-print-none">
-        <small>
-          <a [routerLink]="" (click)="toggleVisibility()">{{ visible ? 'Moins...' : 'Plus...' }}</a>
-        </small>
-      </div>
+      <h6>
+        <a *ngIf="collapsible" class="d-print-none" [routerLink]="" (click)="toggleVisibility()"
+          title="{{ visible ? 'Cacher les détails' : 'Afficher les détails' }}">
+          <i [ngClass]="{far: true, 'fa-plus-square': !visible, 'fa-minus-square': visible}"></i>
+        </a>
+        Contact : <em>{{contact.nomPrenom}}</em></h6>
     </div>
     <div class="card-body" [ngClass]="{'d-none': !visible, 'd-print-block': true}">
       <h6 class="mt-2 mb-1"><small><i class="fas fa-user"></i> Nom & Prénom</small></h6>
       <div>{{contact.nomPrenom}}</div>
 
       <div>
-        <ng-container *ngFor="let ct of contactsTypes.items">
+        <ng-container *ngFor="let ct of typesContacts.items">
           <div *ngIf="contact.contactInfos[ct.contact]">
             <h6 class="mt-2 mb-1"><small><i [class]="ct.contactIcon"></i> {{ct.contact}}</small></h6>
 
@@ -24,7 +24,6 @@
               </div>
             </div>
           </div>
-
         </ng-container>
       </div>
     </div>

@@ -41,7 +41,7 @@
     </div>
 
     <div [ngClass]="{ 'd-none': !contactsVisible, 'd-print-block': true }">
-      <filiale-contact *ngFor="let contact of filiale.contacts" [contact]="contact"></filiale-contact>
+      <card-responsable *ngFor="let contact of filiale.contacts" [contact]="contact"></card-responsable>
     </div>
 
     <small class="row text-muted">

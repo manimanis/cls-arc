@@ -1,9 +1,9 @@
-.filiale-contact span {
+.card-responsable span {
   display: block;
   white-space: pre-wrap;
 }
 
-.filiale-contact small {
+.card-responsable small {
   display: block;
   align-self: flex-start;
   font-style: italic;

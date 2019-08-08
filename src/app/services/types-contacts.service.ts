@@ -88,7 +88,7 @@ export class TypesContactsService {
     const httpParams = new HttpParams().set('numTypeContact', `${typeContact.numTypeContact}`);
     const options = {
       params: httpParams, headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'Content-Type': 'application/json'
       }
     };

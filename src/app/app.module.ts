@@ -10,7 +10,6 @@ import { FilialesListComponent } from './filiales-list/filiales-list.component';
 import { FilialeItemComponent } from './filiale-item/filiale-item.component';
 import { FabComponent } from './fab/fab.component';
 import { EditFilialeComponent } from './edit-filiale/edit-filiale.component';
-import { FilialeContactComponent } from './filiale-contact/filiale-contact.component';
 import { NlToBrPipe } from './pipes/nl-to-br.pipe';
 import { ListeTypeContactComponent } from './liste-type-contact/liste-type-contact.component';
 import { ListeResponsablesComponent } from './liste-responsables/liste-responsables.component';
@@ -23,6 +22,7 @@ import { TableTypesContactsComponent } from './table-types-contacts/table-types-
 import { FormEditTypeContactComponent } from './form-edit-type-contact/form-edit-type-contact.component';
 import { FocusInputDirective } from './directives/focus-input.directive';
 import { SelectResponsablesComponent } from './select-responsables/select-responsables.component';
+import { CardResponsableComponent } from './card-responsable/card-responsable.component';
 
 
 @NgModule({
@@ -32,7 +32,6 @@ import { SelectResponsablesComponent } from './select-responsables/select-respon
     FilialeItemComponent,
     FabComponent,
     EditFilialeComponent,
-    FilialeContactComponent,
     NlToBrPipe,
     ListeTypeContactComponent,
     FormEditTypeContactComponent,
@@ -44,7 +43,8 @@ import { SelectResponsablesComponent } from './select-responsables/select-respon
     FormEditResponsableComponent,
     TableTypesContactsComponent,
     FocusInputDirective,
-    SelectResponsablesComponent
+    SelectResponsablesComponent,
+    CardResponsableComponent
   ],
   imports: [
     BrowserModule,
