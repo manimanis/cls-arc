@@ -8,7 +8,7 @@
         </a>
         Contact : <em>{{contact.nomPrenom}}</em></h6>
     </div>
-    <div class="card-body" [ngClass]="{'d-none': !visible, 'd-print-block': true}">
+    <div class="card-body" [ngClass]="{'d-none': collapsible && !visible, 'd-print-block': true}">
       <h6 class="mt-2 mb-1"><small><i class="fas fa-user"></i> Nom & Prénom</small></h6>
       <div>{{contact.nomPrenom}}</div>
 

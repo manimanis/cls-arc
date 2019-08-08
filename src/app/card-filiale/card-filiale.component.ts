@@ -7,6 +7,7 @@ import { Filiale } from '../shared/filiale';
   styleUrls: ['./card-filiale.component.css']
 })
 export class CardFilialeComponent implements OnInit {
+
   @Input() filiale: Filiale;
   @Input() contactsVisible = false;
 
