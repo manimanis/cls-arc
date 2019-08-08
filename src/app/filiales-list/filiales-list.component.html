@@ -1,5 +1,5 @@
 <div class="container" *ngIf="filiales && filiales.length > 0">
   <h2 class="py-3">Liste des filiales</h2>
-  <filiale-item *ngFor="let filiale of filiales" [filiale]="filiale"></filiale-item>
+  <card-filiale *ngFor="let filiale of filiales" [filiale]="filiale"></card-filiale>
   <fab (clicked)="addNewFiliale()" [routerLink]="['/edit-filiale']"></fab>
 </div>

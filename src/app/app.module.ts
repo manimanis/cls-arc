@@ -7,7 +7,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FilialesListComponent } from './filiales-list/filiales-list.component';
-import { FilialeItemComponent } from './filiale-item/filiale-item.component';
 import { FabComponent } from './fab/fab.component';
 import { EditFilialeComponent } from './edit-filiale/edit-filiale.component';
 import { NlToBrPipe } from './pipes/nl-to-br.pipe';
@@ -23,13 +22,13 @@ import { FormEditTypeContactComponent } from './form-edit-type-contact/form-edit
 import { FocusInputDirective } from './directives/focus-input.directive';
 import { SelectResponsablesComponent } from './select-responsables/select-responsables.component';
 import { CardResponsableComponent } from './card-responsable/card-responsable.component';
+import { CardFilialeComponent } from './card-filiale/card-filiale.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     FilialesListComponent,
-    FilialeItemComponent,
     FabComponent,
     EditFilialeComponent,
     NlToBrPipe,
@@ -44,7 +43,8 @@ import { CardResponsableComponent } from './card-responsable/card-responsable.co
     TableTypesContactsComponent,
     FocusInputDirective,
     SelectResponsablesComponent,
-    CardResponsableComponent
+    CardResponsableComponent,
+    CardFilialeComponent
   ],
   imports: [
     BrowserModule,

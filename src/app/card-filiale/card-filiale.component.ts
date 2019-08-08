@@ -2,11 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Filiale } from '../shared/filiale';
 
 @Component({
-  selector: 'filiale-item',
-  templateUrl: './filiale-item.component.html',
-  styleUrls: ['./filiale-item.component.css']
+  selector: 'card-filiale',
+  templateUrl: './card-filiale.component.html',
+  styleUrls: ['./card-filiale.component.css']
 })
-export class FilialeItemComponent implements OnInit {
+export class CardFilialeComponent implements OnInit {
   @Input() filiale: Filiale;
   @Input() contactsVisible = false;
 
