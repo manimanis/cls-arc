@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Filiale } from '../shared/filiale';
 
 @Component({
-  selector: 'app-form-edit-filiale',
+  selector: 'form-edit-filiale',
   templateUrl: './form-edit-filiale.component.html',
   styleUrls: ['./form-edit-filiale.component.css']
 })

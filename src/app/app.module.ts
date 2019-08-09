@@ -24,6 +24,7 @@ import { CardResponsableComponent } from './card-responsable/card-responsable.co
 import { CardFilialeComponent } from './card-filiale/card-filiale.component';
 import { ListeFilialesComponent } from './liste-filiales/liste-filiales.component';
 import { FormEditFilialeComponent } from './form-edit-filiale/form-edit-filiale.component';
+import { ModalSelectResponsablesComponent } from './modal-select-responsables/modal-select-responsables.component';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { FormEditFilialeComponent } from './form-edit-filiale/form-edit-filiale.
     CardResponsableComponent,
     CardFilialeComponent,
     ListeFilialesComponent,
-    FormEditFilialeComponent
+    FormEditFilialeComponent,
+    ModalSelectResponsablesComponent
   ],
   imports: [
     BrowserModule,
