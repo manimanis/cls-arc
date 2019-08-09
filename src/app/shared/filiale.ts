@@ -11,7 +11,7 @@ export class Filiale {
   contacts: Contact[];
   salles: Salle[];
 
-  constructor(obj) {
+  constructor(obj: any = {}) {
     if (typeof obj === 'undefined') {
       obj = {};
     }

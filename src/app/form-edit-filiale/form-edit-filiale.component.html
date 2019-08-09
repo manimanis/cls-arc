@@ -1,0 +1,41 @@
+<div class="form-edit-filiale">
+  <h2 class="my-3">{{ isNew ? 'Nouvelle Filiale' : 'Edition Filiale'}}</h2>
+  <form novalidate>
+    <fieldset class="border border-dark rounded py-1 px-2 my-1">
+      <legend>Informations Générales</legend>
+
+      <div class="form-group">
+        <label for="nom-filiale">Nom filiale</label>
+        <input type="text" name="nomFiliale" id="nom-filiale" class="form-control" placeholder="Nom filiale">
+        <div class="invalid-feedback">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="Description">Description</label>
+        <textarea name="description" id="description" cols="30" rows="3" class="form-control"
+          placeholder="Une brève description de cette filiale"></textarea>
+        <div class="invalid-feedback"></div>
+      </div>
+      <div class="form-group">
+        <label for="adresse">Adresse</label>
+        <textarea name="adresse" id="adresse" cols="30" rows="3" class="form-control"
+          placeholder="Adresse postale de la filiale"></textarea>
+        <div class="invalid-feedback"></div>
+      </div>
+      <div class="form-group">
+        <label for="observations">Observations</label>
+        <textarea name="observations" id="observations" cols="30" rows="3" class="form-control"
+          placeholder="Observations"></textarea>
+        <div class="invalid-feedback"></div>
+      </div>
+    </fieldset>
+
+    <fieldset class="border border-dark rounded py-1 px-2 my-1">
+      <legend>Liste des contacts</legend>
+    </fieldset>
+
+    <fieldset class="border border-dark rounded py-1 px-2 my-1">
+      <legend>Liste des salles</legend>
+    </fieldset>
+  </form>
+</div>

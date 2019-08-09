@@ -3,11 +3,11 @@ import { Filiale } from '../shared/filiale';
 import { FilialesService } from '../services/filiales.service';
 
 @Component({
-  selector: 'filiales-list',
-  templateUrl: './filiales-list.component.html',
-  styleUrls: ['./filiales-list.component.css']
+  selector: 'liste-filiales',
+  templateUrl: './liste-filiales.component.html',
+  styleUrls: ['./liste-filiales.component.css']
 })
-export class FilialesListComponent implements OnInit {
+export class ListeFilialesComponent implements OnInit {
   @Input() filiales: Filiale[] = [];
 
   constructor(private filialesService: FilialesService) { }

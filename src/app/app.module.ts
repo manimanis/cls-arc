@@ -6,7 +6,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FilialesListComponent } from './filiales-list/filiales-list.component';
 import { FabComponent } from './fab/fab.component';
 import { EditFilialeComponent } from './edit-filiale/edit-filiale.component';
 import { NlToBrPipe } from './pipes/nl-to-br.pipe';
@@ -23,12 +22,13 @@ import { FocusInputDirective } from './directives/focus-input.directive';
 import { SelectResponsablesComponent } from './select-responsables/select-responsables.component';
 import { CardResponsableComponent } from './card-responsable/card-responsable.component';
 import { CardFilialeComponent } from './card-filiale/card-filiale.component';
+import { ListeFilialesComponent } from './liste-filiales/liste-filiales.component';
+import { FormEditFilialeComponent } from './form-edit-filiale/form-edit-filiale.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    FilialesListComponent,
     FabComponent,
     EditFilialeComponent,
     NlToBrPipe,
@@ -44,7 +44,9 @@ import { CardFilialeComponent } from './card-filiale/card-filiale.component';
     FocusInputDirective,
     SelectResponsablesComponent,
     CardResponsableComponent,
-    CardFilialeComponent
+    CardFilialeComponent,
+    ListeFilialesComponent,
+    FormEditFilialeComponent
   ],
   imports: [
     BrowserModule,
